@@ -1,5 +1,5 @@
 import React from 'react';
-import CalendarTableColumn from './Calendar-table-column/Calendar-table-column';
+import CalendarTableColumn from './Calendar-table-column';
 import CalendarTableHoursColumn from './Calendar-table-hours-column';
 
 function CalendarBody() {
