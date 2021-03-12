@@ -1,8 +1,16 @@
-import React from 'react';
-import Calendar from '../../components/Calendar/Calendar';
+import React, { useEffect } from 'react';
+import { Modal } from 'bootstrap';
+import LogInModal from '../../components/Login-modal';
+// import Calendar from '../../components/Calendar/Calendar';
 
 function CalendarPage() {
-  return <Calendar />;
+  useEffect(() => {
+    const myModal = new Modal(document.querySelector('#staticBackdrop'), {});
+
+    myModal.show();
+  });
+
+  return <LogInModal />;
 }
 
 export default CalendarPage;
