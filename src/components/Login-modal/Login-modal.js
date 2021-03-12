@@ -1,6 +1,8 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
+import { noMembersMock } from '../../fixtures-members';
 
-function LogInModal() {
+function LogInModal({ users = noMembersMock }) {
   return (
     <div className="modal fade modal-dialog" id="staticBackdrop">
       <div className="modal-dialog">
@@ -14,7 +16,15 @@ function LogInModal() {
                 className="form-select form-select-lg"
                 id="membersDropdownModal"
               >
-                <option>sdvsdv</option>
+                {users.map((user) => (
+                  <option
+                    key={user.id}
+                    value={user.data.name}
+                    data-rights={user.data.rights}
+                  >
+                    {user.data.name} ({user.data.rights})
+                  </option>
+                ))}
               </select>
             </div>
           </div>
