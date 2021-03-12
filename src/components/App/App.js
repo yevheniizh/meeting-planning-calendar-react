@@ -1,12 +1,8 @@
 import React from 'react';
-import Calendar from '../Calendar';
+import CalendarPage from '../../pages/Calendar-page';
 
 function App() {
-  return (
-    <div>
-      <Calendar />
-    </div>
-  );
+  return <CalendarPage />;
 }
 
 export default App;
