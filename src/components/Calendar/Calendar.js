@@ -3,6 +3,8 @@ import CalendarHeader from './Calendar-header';
 import CalendarBody from './Calendar-body';
 import CalendarFooter from './Calendar-footer';
 
+import './style.scss';
+
 function Calendar() {
   return (
     <div className="calendar">
