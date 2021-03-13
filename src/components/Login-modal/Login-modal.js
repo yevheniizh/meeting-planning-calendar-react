@@ -1,8 +1,15 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useState, useContext } from 'react';
+import { userContext } from '../../contexts/user-context';
 import { noMembersMock } from '../../fixtures-members';
 
 function LogInModal({ users = noMembersMock }) {
+  const { user, setUser } = useContext(userContext);
+  const [name, setName] = useState(users[0].data.name);
+  setTimeout(() => setUser(name));
+  console.log(name);
+  console.log(user);
+
   return (
     <div className="modal fade modal-dialog" id="staticBackdrop">
       <div className="modal-dialog">
@@ -15,14 +22,15 @@ function LogInModal({ users = noMembersMock }) {
               <select
                 className="form-select form-select-lg"
                 id="membersDropdownModal"
+                onChange={(ev) => setName(ev.target.value)}
               >
-                {users.map((user) => (
+                {users.map((member) => (
                   <option
-                    key={user.id}
-                    value={user.data.name}
-                    data-rights={user.data.rights}
+                    key={member.id}
+                    value={member.data.name}
+                    data-rights={member.data.rights}
                   >
-                    {user.data.name} ({user.data.rights})
+                    {member.data.name} ({member.data.rights})
                   </option>
                 ))}
               </select>
@@ -33,6 +41,9 @@ function LogInModal({ users = noMembersMock }) {
               type="button"
               className="btn btn-secondary"
               id="submitRoleButton"
+              onClick={() =>
+                setUser(() => users.find((member) => member.data.name === name))
+              }
             >
               Confirm
             </button>
