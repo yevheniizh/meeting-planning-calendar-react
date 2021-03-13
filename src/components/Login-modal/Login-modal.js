@@ -1,9 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useContext } from 'react';
 import { userContext } from '../../contexts/user-context';
-import { noMembersMock } from '../../fixtures-members';
 
-function LogInModal({ users = noMembersMock }) {
+function LogInModal({ users }) {
   const { setSessionUser } = useContext(userContext);
   const [name, setName] = useState(users[0].data.name);
 

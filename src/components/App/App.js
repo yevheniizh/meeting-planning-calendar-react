@@ -6,7 +6,7 @@ import CalendarPage from '../../pages/Calendar-page';
 function App() {
   const { defaultSessionUser } = useContext(userContext);
   const [users, setUsers] = useState(null);
-  const [sessionUser, setSessionUser] = useState(defaultSessionUser);
+  const [sessionUser, setSessionUser] = useState(null);
 
   useEffect(() => {
     fetch('http://158.101.166.74:8080/api/data/yevhenii_zhyrov/users')
@@ -23,7 +23,6 @@ function App() {
           data: JSON.parse(item.data),
         }));
 
-        setSessionUser(result[0]);
         setUsers(result);
       })
       .catch((error) => console.log(error));
