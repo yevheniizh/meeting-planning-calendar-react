@@ -4,11 +4,8 @@ import { userContext } from '../../contexts/user-context';
 import { noMembersMock } from '../../fixtures-members';
 
 function LogInModal({ users = noMembersMock }) {
-  const { user, setUser } = useContext(userContext);
+  const { setSessionUser } = useContext(userContext);
   const [name, setName] = useState(users[0].data.name);
-  setTimeout(() => setUser(name));
-  console.log(name);
-  console.log(user);
 
   return (
     <div className="modal fade modal-dialog" id="staticBackdrop">
@@ -42,7 +39,9 @@ function LogInModal({ users = noMembersMock }) {
               className="btn btn-secondary"
               id="submitRoleButton"
               onClick={() =>
-                setUser(() => users.find((member) => member.data.name === name))
+                setSessionUser(() =>
+                  users.find((member) => member.data.name === name)
+                )
               }
             >
               Confirm
