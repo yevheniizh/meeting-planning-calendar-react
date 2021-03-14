@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import CalendarHeader from './Calendar-header';
 import CalendarBody from './Calendar-body';
@@ -5,10 +6,10 @@ import CalendarFooter from './Calendar-footer';
 
 import './style.scss';
 
-function Calendar() {
+function Calendar({ users }) {
   return (
     <div className="calendar">
-      <CalendarHeader />
+      <CalendarHeader users={users} />
       <CalendarBody />
       <CalendarFooter />
       <div aria-live="polite" aria-atomic="true" className="position-relative">

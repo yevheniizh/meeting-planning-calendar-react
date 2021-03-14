@@ -9,7 +9,6 @@ function App() {
   const { defaultSessionUser } = useContext(userContext);
   const [users, setUsers] = useState(null);
   const [sessionUser, setSessionUser] = useState(getSessionUser);
-  console.log(getSessionUser);
 
   useEffect(() => {
     fetch('http://158.101.166.74:8080/api/data/yevhenii_zhyrov/users')

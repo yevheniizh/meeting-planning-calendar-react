@@ -69,7 +69,7 @@ function CalendarPage({ users }) {
           </Button>
         </Modal.Footer>
       </Modal>
-      <Calendar />
+      <Calendar users={users} />
     </>
   );
 }
