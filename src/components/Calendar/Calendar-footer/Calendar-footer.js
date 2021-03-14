@@ -9,7 +9,8 @@ function CalendarFooter() {
     return (
       <div className="calendar__footer">
         <div>
-          You are logged in as {getSessionUser.name} ({getSessionUser.rights})
+          You are logged in as {getSessionUser.data.name} (
+          {getSessionUser.data.rights})
         </div>
         <button
           type="button"
@@ -27,6 +28,14 @@ function CalendarFooter() {
   }
 
   return <div />;
+  // return (
+  //   <div className="calendar__footer">
+  //     <div>
+  //       You are logged in as {getSessionUser.data.name} (
+  //       {getSessionUser.data.rights})
+  //     </div>
+  //   </div>
+  // );
 }
 
 export default CalendarFooter;

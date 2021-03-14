@@ -1,54 +1,71 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { Modal, Button } from 'react-bootstrap';
 import { userContext } from '../../contexts/user-context';
 
-function LogInModal({ users }) {
-  const { setSessionUser } = useContext(userContext);
-  const [name, setName] = useState(users[0].data.name);
+function LogInModal({ users, _showModal }) {
+  const { sessionUser, setSessionUser } = useContext(userContext);
+
+  // set first user from list as default user
+  const [sessionUserName, setSessionUserName] = useState(users[0].data.name);
+
+  const [showModal, setShowModal] = useState(_showModal);
+  const handleCloseModal = () => setShowModal(false);
+  const handleShowModal = () => setShowModal(true);
+
+  useEffect(() => {
+    if (!sessionUser) handleShowModal();
+  }, [sessionUser]);
 
   return (
-    <div className="modal fade modal-dialog" id="staticBackdrop">
-      <div className="modal-dialog">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title">Who are You?</h5>
-          </div>
-          <div className="modal-body">
-            <div className="calendar__header_handling-dropdown">
-              <select
-                className="form-select form-select-lg"
-                id="membersDropdownModal"
-                onChange={(ev) => setName(ev.target.value)}
+    <Modal
+      show={showModal}
+      onHide={handleCloseModal}
+      backdrop="static"
+      keyboard={false}
+    >
+      <Modal.Header>
+        <Modal.Title>Who are You?</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <div className="calendar__header_handling-dropdown">
+          <select
+            className="form-select form-select-lg"
+            id="membersDropdownModal"
+            onChange={(ev) => setSessionUserName(ev.target.value)}
+          >
+            {users.map((member) => (
+              <option
+                key={member.id}
+                value={member.data.name}
+                data-rights={member.data.rights}
               >
-                {users.map((member) => (
-                  <option
-                    key={member.id}
-                    value={member.data.name}
-                    data-rights={member.data.rights}
-                  >
-                    {member.data.name} ({member.data.rights})
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-          <div className="modal-footer">
-            <button
-              type="button"
-              className="btn btn-secondary"
-              id="submitRoleButton"
-              onClick={() =>
-                setSessionUser(() =>
-                  users.find((member) => member.data.name === name)
-                )
-              }
-            >
-              Confirm
-            </button>
-          </div>
+                {member.data.name} ({member.data.rights})
+              </option>
+            ))}
+          </select>
         </div>
-      </div>
-    </div>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button
+          variant="secondary"
+          onClick={() => {
+            handleCloseModal();
+            setSessionUser(() => {
+              const user = users.find(
+                (member) => member.data.name === sessionUserName
+              );
+
+              sessionStorage.setItem('memberLoggedIn', JSON.stringify(user));
+
+              return user;
+            });
+          }}
+        >
+          Submit
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 }
 
