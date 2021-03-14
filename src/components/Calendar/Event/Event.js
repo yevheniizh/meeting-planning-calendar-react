@@ -1,7 +1,35 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 function Event({ event }) {
+  const [isDeleteEvent, setIsDeleteEvent] = useState(false);
+  const deleteEvent = () => {
+    const modal = global.confirm(
+      `Are you sure you want to delete '${event.data.name}' event?`
+    );
+
+    if (modal) {
+      setIsDeleteEvent(true);
+    }
+  };
+
+  useEffect(() => {
+    if (isDeleteEvent) {
+      fetch(
+        `http://158.101.166.74:8080/api/data/yevhenii_zhyrov/events/${event.id}`,
+        {
+          method: 'DELETE',
+        }
+      )
+        .then((response) => {
+          if (response.ok) console.log('Event deleted succesfully');
+        })
+        .catch((error) => console.log(error));
+    }
+
+    setIsDeleteEvent(false);
+  }, [isDeleteEvent, event]);
+
   return (
     <div
       draggable="true"
@@ -15,6 +43,7 @@ function Event({ event }) {
         type="button"
         className="calendar__table-column_meeting_delete"
         data-delete="delete"
+        onClick={deleteEvent}
       >
         &times;
       </button>

@@ -43,8 +43,6 @@ function CalendarTableColumn({ day, events }) {
     );
   }
 
-  // return <div />;
-
   return (
     <>
       {[...Array(9)].map((_, i) => (
