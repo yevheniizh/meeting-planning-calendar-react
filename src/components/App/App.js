@@ -4,16 +4,19 @@ import { noMembersMock } from '../../fixtures-members';
 import CalendarPage from '../../pages/Calendar-page';
 
 function App() {
+  const getSessionUser = JSON.parse(sessionStorage.getItem('memberLoggedIn'));
+
   const { defaultSessionUser } = useContext(userContext);
   const [users, setUsers] = useState(null);
-  const [sessionUser, setSessionUser] = useState(null);
+  const [sessionUser, setSessionUser] = useState(getSessionUser);
+  console.log(getSessionUser);
 
   useEffect(() => {
     fetch('http://158.101.166.74:8080/api/data/yevhenii_zhyrov/users')
       .then((response) => response.json())
       .then((data) => {
         if (data === null) {
-          setSessionUser(defaultSessionUser);
+          if (sessionUser === null) setSessionUser(defaultSessionUser);
           setUsers(noMembersMock);
           return;
         }
@@ -26,7 +29,7 @@ function App() {
         setUsers(result);
       })
       .catch((error) => console.log(error));
-  }, [defaultSessionUser]);
+  }, [sessionUser, defaultSessionUser]);
 
   if (users === null) {
     return <div />;
