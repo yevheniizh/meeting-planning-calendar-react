@@ -6,11 +6,11 @@ import CalendarFooter from './Calendar-footer';
 
 import './style.scss';
 
-function Calendar({ users }) {
+function Calendar({ users, events }) {
   return (
     <div className="calendar">
       <CalendarHeader users={users} />
-      <CalendarBody />
+      <CalendarBody events={events} />
       <CalendarFooter />
       <div aria-live="polite" aria-atomic="true" className="position-relative">
         <div className="toast-container position-fixed bottom-0 end-0 p-3" />

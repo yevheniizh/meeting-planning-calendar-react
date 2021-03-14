@@ -8,6 +8,7 @@ function App() {
 
   const { defaultSessionUser } = useContext(userContext);
   const [users, setUsers] = useState(null);
+  const [events, setEvents] = useState(null);
   const [sessionUser, setSessionUser] = useState(getSessionUser);
 
   useEffect(() => {
@@ -28,6 +29,23 @@ function App() {
         setUsers(result);
       })
       .catch((error) => console.log(error));
+
+    fetch('http://158.101.166.74:8080/api/data/yevhenii_zhyrov/events')
+      .then((response) => response.json())
+      .then((data) => {
+        if (data === null) {
+          setEvents([]);
+          return;
+        }
+
+        const result = data.map((item) => ({
+          id: item.id,
+          data: JSON.parse(item.data),
+        }));
+
+        setEvents(result);
+      })
+      .catch((error) => console.log(error));
   }, [sessionUser, defaultSessionUser]);
 
   if (users === null) {
@@ -36,7 +54,7 @@ function App() {
 
   return (
     <UserProvider value={{ sessionUser, setSessionUser }}>
-      <CalendarPage users={users} />
+      <CalendarPage users={users} events={events} />
     </UserProvider>
   );
 }

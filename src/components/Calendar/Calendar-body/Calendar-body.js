@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import CalendarTableColumn from './Calendar-table-column';
 import CalendarTableHoursColumn from './Calendar-table-hours-column';
 
-function CalendarBody() {
+function CalendarBody({ events }) {
   return (
     <div className="calendar__table">
       <ul className="calendar__table-column" data-day="Name">
@@ -12,27 +13,27 @@ function CalendarBody() {
 
       <ul className="calendar__table-column" data-day="Mon">
         <li className="calendar__table-column-header">Mon</li>
-        <CalendarTableColumn day="Mon" />
+        <CalendarTableColumn day="Mon" events={events} />
       </ul>
 
       <ul className="calendar__table-column" data-day="Tue">
         <li className="calendar__table-column-header">Tue</li>
-        <CalendarTableColumn day="Tue" />
+        <CalendarTableColumn day="Tue" events={events} />
       </ul>
 
       <ul className="calendar__table-column" data-day="Wed">
         <li className="calendar__table-column-header">Wed</li>
-        <CalendarTableColumn day="Wed" />
+        <CalendarTableColumn day="Wed" events={events} />
       </ul>
 
       <ul className="calendar__table-column" data-day="Thu">
         <li className="calendar__table-column-header">Thu</li>
-        <CalendarTableColumn day="Thu" />
+        <CalendarTableColumn day="Thu" events={events} />
       </ul>
 
       <ul className="calendar__table-column" data-day="Fri">
         <li className="calendar__table-column-header">Fri</li>
-        <CalendarTableColumn day="Fri" />
+        <CalendarTableColumn day="Fri" events={events} />
       </ul>
     </div>
   );
