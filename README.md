@@ -42,7 +42,6 @@ $ npm run build           // generate a 'production' build
 $ npm run deploy          // deploy it to 'GitHub Pages'
 ```
 
-````
 ## To launch eslint
 
 ```sh
@@ -50,4 +49,4 @@ $ npm run lint            // start analizing *.{js} code and searching issues ov
 $ npm run lint:fix        // start fixing as many issues as possible over all app
 $ npm run stylelint       // start analizing *.{css,scss} code and searching issues over all app
 $ npm run stylelint:fix   // start fixing in css/scss as many issues as possible over all app
-````
+```
