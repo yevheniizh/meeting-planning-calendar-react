@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/meeting-planning-calendar-react/static/css/main.da073dc0.chunk.css",
+    "main.js": "/meeting-planning-calendar-react/static/js/main.434b84da.chunk.js",
+    "main.js.map": "/meeting-planning-calendar-react/static/js/main.434b84da.chunk.js.map",
+    "runtime-main.js": "/meeting-planning-calendar-react/static/js/runtime-main.3c340b73.js",
+    "runtime-main.js.map": "/meeting-planning-calendar-react/static/js/runtime-main.3c340b73.js.map",
+    "static/css/2.54370922.chunk.css": "/meeting-planning-calendar-react/static/css/2.54370922.chunk.css",
+    "static/js/2.e5dcb893.chunk.js": "/meeting-planning-calendar-react/static/js/2.e5dcb893.chunk.js",
+    "static/js/2.e5dcb893.chunk.js.map": "/meeting-planning-calendar-react/static/js/2.e5dcb893.chunk.js.map",
+    "index.html": "/meeting-planning-calendar-react/index.html",
+    "static/css/2.54370922.chunk.css.map": "/meeting-planning-calendar-react/static/css/2.54370922.chunk.css.map",
+    "static/css/main.da073dc0.chunk.css.map": "/meeting-planning-calendar-react/static/css/main.da073dc0.chunk.css.map",
+    "static/js/2.e5dcb893.chunk.js.LICENSE.txt": "/meeting-planning-calendar-react/static/js/2.e5dcb893.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.3c340b73.js",
+    "static/css/2.54370922.chunk.css",
+    "static/js/2.e5dcb893.chunk.js",
+    "static/css/main.da073dc0.chunk.css",
+    "static/js/main.434b84da.chunk.js"
+  ]
+}
