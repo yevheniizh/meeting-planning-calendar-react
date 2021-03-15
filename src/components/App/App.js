@@ -25,9 +25,10 @@ function App() {
       );
 
       if (response.ok) {
-        console.log(`API: event deleted succesfully`);
         const updatedEvents = events.filter((event) => event.id !== eventId);
         setEvents(updatedEvents);
+
+        console.log(`API: event deleted succesfully`);
         return;
       }
 
@@ -52,7 +53,12 @@ function App() {
         }
       );
 
-      console.log(`API: ${response.statusText}. Event posted succesfully`);
+      if (response.ok) {
+        console.log(`API: event posted succesfully`);
+        return;
+      }
+
+      console.log(`API: something went wrong`);
     } catch (error) {
       console.log(`${error}. Please try again`);
     }
@@ -67,15 +73,25 @@ function App() {
 
       if (result === null) {
         setEvents([]);
+
+        console.log('API: events downloaded succesfully');
+        console.log('API: no data');
         return;
       }
 
-      const data = result.map((item) => ({
-        id: item.id,
-        data: JSON.parse(item.data),
-      }));
+      if (response.ok) {
+        const data = result.map((item) => ({
+          id: item.id,
+          data: JSON.parse(item.data),
+        }));
 
-      setEvents(data);
+        setEvents(data);
+
+        console.log('API: events downloaded succesfully');
+        return;
+      }
+
+      console.log(`API: something went wrong`);
     } catch (error) {
       console.log(`${error}. Please try again`);
     }
@@ -91,15 +107,25 @@ function App() {
       if (result === null) {
         if (sessionUser === null) setSessionUser(defaultSessionUser);
         setUsers(noMembersMock);
+
+        console.log('API: users downloaded succesfully');
+        console.log('API: no users');
         return;
       }
 
-      const data = result.map((item) => ({
-        id: item.id,
-        data: JSON.parse(item.data),
-      }));
+      if (response.ok) {
+        const data = result.map((item) => ({
+          id: item.id,
+          data: JSON.parse(item.data),
+        }));
 
-      setUsers(data);
+        setUsers(data);
+
+        console.log(`API: users downloaded succesfully`);
+        return;
+      }
+
+      console.log(`API: something went wrong`);
     } catch (error) {
       console.log(`${error}. Please try again`);
     }
