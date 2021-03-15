@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { userContext, UserProvider } from '../../contexts/user-context';
 import { noMembersMock } from '../../fixtures-members';
-import CalendarPage from '../../pages/Calendar-page';
+import Calendar from '../Calendar/Calendar';
+import LogInModal from '../Login-modal';
 
 function App() {
   const getSessionUser = JSON.parse(sessionStorage.getItem('memberLoggedIn'));
@@ -85,11 +86,8 @@ function App() {
 
   return (
     <UserProvider value={{ sessionUser, setSessionUser }}>
-      <CalendarPage
-        users={users}
-        events={events}
-        onEventDelete={onEventDelete}
-      />
+      <LogInModal users={users} />
+      <Calendar users={users} events={events} onEventDelete={onEventDelete} />
     </UserProvider>
   );
 }
