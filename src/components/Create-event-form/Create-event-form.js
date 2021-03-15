@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/prop-types */
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import './style.scss';
 import {
@@ -110,14 +111,14 @@ function CreateEventForm({ users }) {
         </div>
 
         <div className="create-event__form-element">
-          <a href="/">
+          <Link to="/">
             <button
               type="button"
               className="btn btn-outline-dark create-event__button_cancel"
             >
               Cancel
             </button>
-          </a>
+          </Link>
         </div>
       </form>
     </div>

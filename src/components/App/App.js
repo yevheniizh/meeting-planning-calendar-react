@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react';
+
+import { Route, Switch } from 'react-router-dom';
 import { userContext, UserProvider } from '../../contexts/user-context';
 import { noMembersMock } from '../../fixtures-members';
 import Calendar from '../Calendar/Calendar';
 import LogInModal from '../Login-modal';
-// import CreateEventForm from '../Create-event-form';
+import CreateEventForm from '../Create-event-form';
 
 function App() {
   const getSessionUser = JSON.parse(sessionStorage.getItem('memberLoggedIn'));
@@ -87,9 +89,20 @@ function App() {
 
   return (
     <UserProvider value={{ sessionUser, setSessionUser }}>
-      <LogInModal users={users} />
-      <Calendar users={users} events={events} onEventDelete={onEventDelete} />
-      {/* <CreateEventForm users={users} /> */}
+      <Switch>
+        <Route path="/" exact>
+          <LogInModal users={users} />
+          <Calendar
+            users={users}
+            events={events}
+            onEventDelete={onEventDelete}
+          />
+        </Route>
+
+        <Route path="/create-event">
+          <CreateEventForm users={users} />
+        </Route>
+      </Switch>
     </UserProvider>
   );
 }

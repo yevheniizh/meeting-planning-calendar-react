@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function CalendarHeader({ users }) {
   return (
@@ -23,13 +24,15 @@ function CalendarHeader({ users }) {
           </select>
         </div>
         <div className="calendar__header_handling-newEventCreatingButton">
-          <button
-            type="submit"
-            name="newEvent"
-            className="btn btn-outline-dark"
-          >
-            New event +
-          </button>
+          <Link to="/create-event">
+            <button
+              type="submit"
+              name="newEvent"
+              className="btn btn-outline-dark"
+            >
+              New event +
+            </button>
+          </Link>
         </div>
       </div>
     </div>
