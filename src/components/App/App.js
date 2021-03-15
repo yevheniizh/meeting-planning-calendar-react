@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useContext, useCallback } from 'react';
 
 import { Route, Switch, Redirect } from 'react-router-dom';
@@ -129,7 +130,7 @@ function App() {
     } catch (error) {
       console.log(`${error}. Please try again`);
     }
-  }, [defaultSessionUser, sessionUser]);
+  }, []);
 
   useEffect(() => {
     fetchEvents();
