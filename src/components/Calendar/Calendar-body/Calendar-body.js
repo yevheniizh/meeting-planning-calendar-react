@@ -1,60 +1,27 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import CalendarTableColumn from './Calendar-table-column';
-import CalendarTableHoursColumn from './Calendar-table-hours-column';
+import CalendarBodyColumn from './Calendar-body-column';
+import CalendarBodyHoursColumn from './Calendar-body-hours-column';
+import { DAYS } from '../../../utils/constants';
 
 function CalendarBody({ events, onEventDelete }) {
   return (
     <div className="calendar__table">
       <ul className="calendar__table-column" data-day="Name">
         <li className="calendar__table-column-header">Name</li>
-        <CalendarTableHoursColumn />
+        <CalendarBodyHoursColumn />
       </ul>
 
-      <ul className="calendar__table-column" data-day="Mon">
-        <li className="calendar__table-column-header">Mon</li>
-        <CalendarTableColumn
-          day="Mon"
-          events={events}
-          onEventDelete={onEventDelete}
-        />
-      </ul>
-
-      <ul className="calendar__table-column" data-day="Tue">
-        <li className="calendar__table-column-header">Tue</li>
-        <CalendarTableColumn
-          day="Tue"
-          events={events}
-          onEventDelete={onEventDelete}
-        />
-      </ul>
-
-      <ul className="calendar__table-column" data-day="Wed">
-        <li className="calendar__table-column-header">Wed</li>
-        <CalendarTableColumn
-          day="Wed"
-          events={events}
-          onEventDelete={onEventDelete}
-        />
-      </ul>
-
-      <ul className="calendar__table-column" data-day="Thu">
-        <li className="calendar__table-column-header">Thu</li>
-        <CalendarTableColumn
-          day="Thu"
-          events={events}
-          onEventDelete={onEventDelete}
-        />
-      </ul>
-
-      <ul className="calendar__table-column" data-day="Fri">
-        <li className="calendar__table-column-header">Fri</li>
-        <CalendarTableColumn
-          day="Fri"
-          events={events}
-          onEventDelete={onEventDelete}
-        />
-      </ul>
+      {DAYS.map((day) => (
+        <ul key={day} className="calendar__table-column" data-day={day}>
+          <li className="calendar__table-column-header">{day}</li>
+          <CalendarBodyColumn
+            day={day}
+            events={events}
+            onEventDelete={onEventDelete}
+          />
+        </ul>
+      ))}
     </div>
   );
 }
