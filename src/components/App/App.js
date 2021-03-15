@@ -15,36 +15,47 @@ function App() {
   const [events, setEvents] = useState(null);
   const [sessionUser, setSessionUser] = useState(getSessionUser);
 
-  const onEventDelete = (eventId) => {
-    fetch(
-      `http://158.101.166.74:8080/api/data/yevhenii_zhyrov/events/${eventId}`,
-      {
-        method: 'DELETE',
-      }
-    )
-      .then(() => {
-        console.log('Event deleted succesfully');
-        const updatedEvents = events.filter((event) => event.id !== eventId);
+  const onEventDelete = async (eventId) => {
+    try {
+      const response = await fetch(
+        `http://158.101.166.74:8080/api/data/yevhenii_zhyrov/events/${eventId}`,
+        {
+          method: 'DELETE',
+        }
+      );
 
+      if (response.ok) {
+        console.log(`API: event deleted succesfully`);
+        const updatedEvents = events.filter((event) => event.id !== eventId);
         setEvents(updatedEvents);
-      })
-      .catch((error) => console.log(error));
+        return;
+      }
+
+      console.log(`API: something went wrong`);
+    } catch (error) {
+      console.log(`${error}. Please try again`);
+    }
   };
 
-  const onEventPost = (eventData) => {
-    fetch('http://158.101.166.74:8080/api/data/yevhenii_zhyrov/events', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-      },
-      body: JSON.stringify({
-        data: JSON.stringify(eventData),
-      }),
-    })
-      .then(() => {
-        console.log('Event posted succesfully');
-      })
-      .catch((error) => console.log(error));
+  const onEventPost = async (eventData) => {
+    try {
+      const response = await fetch(
+        'http://158.101.166.74:8080/api/data/yevhenii_zhyrov/events',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+          },
+          body: JSON.stringify({
+            data: JSON.stringify(eventData),
+          }),
+        }
+      );
+
+      console.log(`API: ${response.statusText}. Event posted succesfully`);
+    } catch (error) {
+      console.log(`${error}. Please try again`);
+    }
   };
 
   const fetchEvents = useCallback(async () => {
