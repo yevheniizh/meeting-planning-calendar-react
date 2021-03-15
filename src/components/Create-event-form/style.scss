@@ -1,0 +1,72 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+
+.create-event__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+  overflow: hidden;
+  font-size: 1rem;
+  margin: 0 auto;
+
+  .create-event__form-element {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+
+    .create-event__form-input {
+      height: 3rem;
+      font-size: 1.25rem;
+
+      select,
+      input {
+        height: 100%;
+        width: 100%;
+        font-size: 1.25rem;
+        border: 2px solid $dark;
+        box-shadow: none;
+        border-radius: 10px;
+      }
+    }
+
+    .create-event__form-input_multiselect {
+      height: 4.5rem;
+      border-radius: 10px;
+      overflow: scroll;
+      border: 2px solid $dark;
+      box-shadow: none;
+      padding: 5px;
+    }
+
+    a {
+      height: 100%;
+      width: 100%;
+    }
+
+    button {
+      background-color: $gray-300;
+      height: 100%;
+      width: 100%;
+
+      &:hover {
+        background-color: $gray-500;
+      }
+    }
+
+    .create-event__button_create {
+      background-color: $gray-500;
+    }
+
+    .create-event__button_create,
+    .create-event__button_cancel {
+      border-radius: 10px;
+      height: 3rem;
+      width: 100%;
+      font-size: 1.25rem;
+      border: 2px solid $dark;
+      box-shadow: none;
+    }
+  }
+}

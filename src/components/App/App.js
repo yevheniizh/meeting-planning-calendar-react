@@ -3,6 +3,7 @@ import { userContext, UserProvider } from '../../contexts/user-context';
 import { noMembersMock } from '../../fixtures-members';
 import Calendar from '../Calendar/Calendar';
 import LogInModal from '../Login-modal';
+// import CreateEventForm from '../Create-event-form';
 
 function App() {
   const getSessionUser = JSON.parse(sessionStorage.getItem('memberLoggedIn'));
@@ -88,6 +89,7 @@ function App() {
     <UserProvider value={{ sessionUser, setSessionUser }}>
       <LogInModal users={users} />
       <Calendar users={users} events={events} onEventDelete={onEventDelete} />
+      {/* <CreateEventForm users={users} /> */}
     </UserProvider>
   );
 }

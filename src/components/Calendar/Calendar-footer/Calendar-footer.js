@@ -28,14 +28,6 @@ function CalendarFooter() {
   }
 
   return <div />;
-  // return (
-  //   <div className="calendar__footer">
-  //     <div>
-  //       You are logged in as {getSessionUser.data.name} (
-  //       {getSessionUser.data.rights})
-  //     </div>
-  //   </div>
-  // );
 }
 
 export default CalendarFooter;
