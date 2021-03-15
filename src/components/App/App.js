@@ -31,6 +31,22 @@ function App() {
       .catch((error) => console.log(error));
   };
 
+  const onEventPost = (eventData) => {
+    fetch('http://158.101.166.74:8080/api/data/yevhenii_zhyrov/events', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+      body: JSON.stringify({
+        data: JSON.stringify(eventData),
+      }),
+    })
+      .then(() => {
+        console.log('Event posted succesfully');
+      })
+      .catch((error) => console.log(error));
+  };
+
   const fetchEvents = useCallback(async () => {
     try {
       const response = await fetch(
@@ -100,7 +116,7 @@ function App() {
         </Route>
 
         <Route path="/create-event">
-          <CreateEventForm users={users} />
+          <CreateEventForm users={users} onEventPost={onEventPost} />
         </Route>
 
         <Route
