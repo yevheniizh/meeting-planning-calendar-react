@@ -40,6 +40,17 @@ function App() {
   };
 
   const onEventPost = async (eventData) => {
+    if (
+      events.some(
+        ({ data }) => data.day === eventData.day && data.time === eventData.time
+      )
+    ) {
+      console.log(
+        'API: This time slot is already occupied. Please choose another day or time'
+      );
+      return false;
+    }
+
     try {
       const response = await fetch(
         'http://158.101.166.74:8080/api/data/yevhenii_zhyrov/events',
@@ -53,15 +64,18 @@ function App() {
           }),
         }
       );
+      const isResponseOk = response.ok;
 
-      if (response.ok) {
+      if (isResponseOk) {
         console.log(`API: event posted succesfully`);
-        return;
+        return isResponseOk;
       }
 
       console.log(`API: something went wrong`);
+      return isResponseOk;
     } catch (error) {
       console.log(`${error}. Please try again`);
+      return false;
     }
   };
 

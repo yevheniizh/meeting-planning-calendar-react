@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import './style.scss';
 import {
@@ -11,9 +12,11 @@ import {
 } from '../../utils/constants';
 
 function CreateEventForm({ users, onEventPost }) {
-  const history = useHistory();
   const [eventData, setEventData] = useState({});
-  console.log(eventData);
+
+  useEffect(() => {
+    setEventData({ day: DAYS[0], time: `${WORKING_DAY_START}:00` });
+  }, []);
 
   const membersDropdown = (
     <div className="create-event__form-input_multiselect">
@@ -94,7 +97,7 @@ function CreateEventForm({ users, onEventPost }) {
     </div>
   );
 
-  const handleSubmit = (ev) => {
+  const handleSubmit = async (ev) => {
     ev.preventDefault();
 
     if (
@@ -103,10 +106,12 @@ function CreateEventForm({ users, onEventPost }) {
       eventData.day &&
       eventData.time
     ) {
-      onEventPost(eventData);
-      setTimeout(() => {
-        history.push({ pathname: 'meeting-planning-calendar-react' });
-      }, 1000);
+      const isTimeSlotEmpty = await onEventPost(eventData);
+
+      if (isTimeSlotEmpty)
+        setTimeout(() => {
+          window.location.href = '/meeting-planning-calendar-react';
+        }, 1000);
     } else {
       console.log('Please, fill out all fields');
     }
