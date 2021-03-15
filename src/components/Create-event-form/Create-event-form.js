@@ -111,7 +111,7 @@ function CreateEventForm({ users }) {
         </div>
 
         <div className="create-event__form-element">
-          <Link to="/">
+          <Link to="/meeting-planning-calendar-react">
             <button
               type="button"
               className="btn btn-outline-dark create-event__button_cancel"

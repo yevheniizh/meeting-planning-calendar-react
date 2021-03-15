@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react';
 
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { userContext, UserProvider } from '../../contexts/user-context';
 import { noMembersMock } from '../../fixtures-members';
 import Calendar from '../Calendar/Calendar';
@@ -90,7 +90,7 @@ function App() {
   return (
     <UserProvider value={{ sessionUser, setSessionUser }}>
       <Switch>
-        <Route path="/" exact>
+        <Route path="/meeting-planning-calendar-react" exact>
           <LogInModal users={users} />
           <Calendar
             users={users}
@@ -102,6 +102,11 @@ function App() {
         <Route path="/create-event">
           <CreateEventForm users={users} />
         </Route>
+
+        <Route
+          path="/"
+          component={() => <Redirect to="/meeting-planning-calendar-react" />}
+        />
       </Switch>
     </UserProvider>
   );
