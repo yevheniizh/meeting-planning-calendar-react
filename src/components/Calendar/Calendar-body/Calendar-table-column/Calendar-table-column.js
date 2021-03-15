@@ -2,7 +2,7 @@
 import React from 'react';
 import Event from '../../Event';
 
-function CalendarTableColumn({ day, events }) {
+function CalendarTableColumn({ day, events, onEventDelete }) {
   if (events) {
     const filteredEventsData = [...events].filter(
       (event) => event.data.day === day
@@ -26,6 +26,7 @@ function CalendarTableColumn({ day, events }) {
                   event={filteredEventsData.find(
                     (event) => event.data.time === timeSlot
                   )}
+                  onEventDelete={onEventDelete}
                 />
               </li>
             );

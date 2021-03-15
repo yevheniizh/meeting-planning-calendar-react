@@ -35,7 +35,8 @@
       "prettier"
     ],
     "plugins": [
-      "prettier"
+      "prettier",
+      "react-hooks"
     ],
     "rules": {
       "prettier/prettier": "warn",
@@ -45,7 +46,9 @@
       "func-names": "off",
       "no-param-reassign": "off",
       "spaced-comment": "off",
-      "no-console": "off"
+      "no-console": "off",
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn"
     }
   },
   "browserslist": {
@@ -69,6 +72,7 @@
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "husky": "^4.3.6",
     "prettier": "^2.2.1",
     "pretty-quick": "^3.1.0",

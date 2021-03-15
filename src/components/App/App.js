@@ -11,6 +11,22 @@ function App() {
   const [events, setEvents] = useState(null);
   const [sessionUser, setSessionUser] = useState(getSessionUser);
 
+  const onEventDelete = (eventId) => {
+    fetch(
+      `http://158.101.166.74:8080/api/data/yevhenii_zhyrov/events/${eventId}`,
+      {
+        method: 'DELETE',
+      }
+    )
+      .then(() => {
+        console.log('Event deleted succesfully');
+        const updatedEvents = events.filter((event) => event.id !== eventId);
+
+        setEvents(updatedEvents);
+      })
+      .catch((error) => console.log(error));
+  };
+
   useEffect(() => {
     fetch('http://158.101.166.74:8080/api/data/yevhenii_zhyrov/users')
       .then((response) => response.json())
@@ -54,7 +70,11 @@ function App() {
 
   return (
     <UserProvider value={{ sessionUser, setSessionUser }}>
-      <CalendarPage users={users} events={events} />
+      <CalendarPage
+        users={users}
+        events={events}
+        onEventDelete={onEventDelete}
+      />
     </UserProvider>
   );
 }
