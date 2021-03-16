@@ -6,6 +6,7 @@ import { userContext, UserProvider } from '../../contexts/user-context';
 import { noMembersMock } from '../../fixtures-members';
 import CalendarPage from '../../pages/Calendar-page';
 import ErrorPage from '../../pages/error404/Error-page';
+import Notification from '../Notification';
 
 function App() {
   const getSessionUser = JSON.parse(sessionStorage.getItem('memberLoggedIn'));
@@ -14,6 +15,7 @@ function App() {
   const [users, setUsers] = useState(null);
   const [events, setEvents] = useState(null);
   const [sessionUser, setSessionUser] = useState(getSessionUser);
+  const [newNotification, setNewNotification] = useState();
 
   const onEventDelete = async (eventId) => {
     try {
@@ -26,15 +28,22 @@ function App() {
 
       if (response.ok) {
         const updatedEvents = events.filter((event) => event.id !== eventId);
-        setEvents(updatedEvents);
 
-        console.log(`API: event deleted succesfully`);
+        setEvents(updatedEvents);
+        setNewNotification(
+          <Notification
+            message="API: event deleted successfully"
+            status="successful"
+          />
+        );
         return;
       }
 
-      console.log(`API: something went wrong`);
+      setNewNotification(
+        <Notification message="API: something went wrong" status="warning" />
+      );
     } catch (error) {
-      console.log(`${error}. Please try again`);
+      console.error(error);
     }
   };
 
@@ -44,8 +53,11 @@ function App() {
         ({ data }) => data.day === eventData.day && data.time === eventData.time
       )
     ) {
-      console.log(
-        'API: This time slot is already occupied. Please choose another day or time'
+      setNewNotification(
+        <Notification
+          message="API: This time slot is already occupied. Please choose another day or time"
+          status="warning"
+        />
       );
       return false;
     }
@@ -63,17 +75,23 @@ function App() {
           }),
         }
       );
-      const isResponseOk = response.ok;
 
-      if (isResponseOk) {
-        console.log(`API: event posted succesfully`);
-        return isResponseOk;
+      if (response.ok) {
+        setNewNotification(
+          <Notification
+            message="API: event posted successfully"
+            status="successful"
+          />
+        );
+        return true;
       }
 
-      console.log(`API: something went wrong`);
-      return isResponseOk;
+      setNewNotification(
+        <Notification message="API: something went wrong" status="warning" />
+      );
+      return false;
     } catch (error) {
-      console.log(`${error}. Please try again`);
+      console.error(error);
       return false;
     }
   };
@@ -88,8 +106,12 @@ function App() {
       if (result === null) {
         setEvents([]);
 
-        console.log('API: events downloaded succesfully');
-        console.log('API: no data');
+        setNewNotification(
+          <Notification
+            message="API: events downloaded successfully, but... no data yet"
+            status="successful"
+          />
+        );
         return;
       }
 
@@ -100,14 +122,20 @@ function App() {
         }));
 
         setEvents(data);
-
-        console.log('API: events downloaded succesfully');
+        setNewNotification(
+          <Notification
+            message="API: events downloaded successfully"
+            status="successful"
+          />
+        );
         return;
       }
 
-      console.log(`API: something went wrong`);
+      setNewNotification(
+        <Notification message="API: something went wrong" status="warning" />
+      );
     } catch (error) {
-      console.log(`${error}. Please try again`);
+      console.error(error);
     }
   }, []);
 
@@ -120,10 +148,14 @@ function App() {
 
       if (result === null) {
         if (sessionUser === null) setSessionUser(defaultSessionUser);
-        setUsers(noMembersMock);
 
-        console.log('API: users downloaded succesfully');
-        console.log('API: no users');
+        setUsers(noMembersMock);
+        setNewNotification(
+          <Notification
+            message="API: users downloaded successfully, but... no data yet"
+            status="successful"
+          />
+        );
         return;
       }
 
@@ -134,14 +166,20 @@ function App() {
         }));
 
         setUsers(data);
-
-        console.log(`API: users downloaded succesfully`);
+        setNewNotification(
+          <Notification
+            message="API: users downloaded successfully"
+            status="successful"
+          />
+        );
         return;
       }
 
-      console.log(`API: something went wrong`);
+      setNewNotification(
+        <Notification message="API: something went wrong" status="warning" />
+      );
     } catch (error) {
-      console.log(`${error}. Please try again`);
+      console.error(error);
     }
   }, []);
 
@@ -164,6 +202,7 @@ function App() {
             events={events}
             onEventDelete={onEventDelete}
             onEventPost={onEventPost}
+            newNotification={newNotification}
           />
         </Route>
 
