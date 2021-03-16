@@ -7,11 +7,23 @@ import {
   WORKING_DAY_TIMESLOTS_QUANTITY,
 } from '../../../../utils/constants';
 
-function CalendarBodyColumn({ day, events, onEventDelete }) {
+function CalendarBodyColumn({ day, events, onEventDelete, sortingBy }) {
   if (events) {
-    const filteredByDayEventsData = [...events].filter(
+    let filteredByDayEventsData = [...events].filter(
       (event) => event.data.day === day
     );
+
+    if (sortingBy === 'All members') {
+      filteredByDayEventsData = [...events].filter(
+        (event) => event.data.day === day
+      );
+    }
+
+    if (sortingBy !== 'All members') {
+      filteredByDayEventsData = filteredByDayEventsData.filter((event) =>
+        event.data.members.some(({ id }) => id === sortingBy)
+      );
+    }
 
     return (
       <>

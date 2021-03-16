@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function CalendarHeader({ users }) {
+function CalendarHeader({ users, setSortingBy }) {
   return (
     <div className="calendar__header">
       <div>
@@ -10,12 +10,25 @@ function CalendarHeader({ users }) {
       </div>
       <div className="calendar__header_handling">
         <div className="calendar__header_handling-dropdown">
-          <select className="form-select form-select-lg" id="membersDropdown">
-            <option value="All members">All members</option>
+          <select
+            className="form-select form-select-lg"
+            id="membersDropdown"
+            onChange={(ev) => {
+              const userid = ev.target[ev.target.selectedIndex].getAttribute(
+                'data-userid'
+              );
+
+              setSortingBy(userid);
+            }}
+          >
+            <option value="All members" data-userid="All members">
+              All members
+            </option>
             {users.map((user) => (
               <option
                 key={user.id}
                 value={user.data.name}
+                data-userid={user.id}
                 data-rights={user.data.rights}
               >
                 {user.data.name} ({user.data.rights})
