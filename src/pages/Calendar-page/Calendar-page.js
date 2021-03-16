@@ -18,8 +18,14 @@ function CalendarPage({
 }) {
   const [notifications, setNotification] = useState([]);
 
+  const setNewNotification = (notification) =>
+    setNotification([
+      ...notifications.slice(notifications.length - 5),
+      notification,
+    ]);
+
   useEffect(() => {
-    setNotification([...notifications, newNotification]);
+    setNewNotification(newNotification);
   }, [newNotification]);
 
   return (
@@ -30,7 +36,11 @@ function CalendarPage({
       </Route>
 
       <Route path="/meeting-planning-calendar-react/create-event">
-        <CreateEventForm users={users} onEventPost={onEventPost} />
+        <CreateEventForm
+          users={users}
+          onEventPost={onEventPost}
+          setNewNotification={setNewNotification}
+        />
       </Route>
 
       {/* Notifications container  */}

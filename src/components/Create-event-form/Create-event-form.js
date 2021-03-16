@@ -10,8 +10,9 @@ import {
   WORKING_DAY_TIMESLOTS_QUANTITY,
   WORKING_DAY_START,
 } from '../../utils/constants';
+import Notification from '../Notification';
 
-function CreateEventForm({ users, onEventPost }) {
+function CreateEventForm({ users, onEventPost, setNewNotification }) {
   const [eventData, setEventData] = useState({});
 
   useEffect(() => {
@@ -114,6 +115,9 @@ function CreateEventForm({ users, onEventPost }) {
         }, 1000);
     } else {
       console.log('Please, fill out all fields');
+      setNewNotification(
+        <Notification message="Please, fill out all fields" status="warning" />
+      );
     }
   };
 

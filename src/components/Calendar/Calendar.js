@@ -12,9 +12,6 @@ function Calendar({ users, events, onEventDelete }) {
       <CalendarHeader users={users} />
       <CalendarBody events={events} onEventDelete={onEventDelete} />
       <CalendarFooter />
-      <div aria-live="polite" aria-atomic="true" className="position-relative">
-        <div className="toast-container position-fixed bottom-0 end-0 p-3" />
-      </div>
     </div>
   );
 }
