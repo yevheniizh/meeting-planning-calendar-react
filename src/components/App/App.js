@@ -5,6 +5,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { userContext, UserProvider } from '../../contexts/user-context';
 import { noMembersMock } from '../../fixtures-members';
 import CalendarPage from '../../pages/Calendar-page';
+import ErrorPage from '../../pages/error404/Error-page';
 
 function App() {
   const getSessionUser = JSON.parse(sessionStorage.getItem('memberLoggedIn'));
@@ -165,6 +166,8 @@ function App() {
             onEventPost={onEventPost}
           />
         </Route>
+
+        <Route path="/error" component={ErrorPage} />
       </Switch>
     </UserProvider>
   );
