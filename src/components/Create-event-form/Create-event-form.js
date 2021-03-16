@@ -13,7 +13,30 @@ import {
 import Notification from '../Notification';
 
 function CreateEventForm({ users, onEventPost, setNewNotification }) {
+  const setMembersChoosenByDefault = [...users].map((user) => ({
+    ...user,
+    isChoosen: false,
+  }));
+
   const [eventData, setEventData] = useState({});
+  const [isChoosenMembers, setIsChoosenMembers] = useState(
+    setMembersChoosenByDefault
+  );
+
+  console.log(isChoosenMembers);
+  console.log(eventData);
+
+  const setMembers = () =>
+    setEventData({
+      ...eventData,
+      members: isChoosenMembers
+        .filter(({ isChoosen }) => isChoosen === true)
+        .map(({ id }) => ({ id })),
+    });
+
+  useEffect(() => {
+    setMembers();
+  }, [isChoosenMembers]);
 
   useEffect(() => {
     setEventData({ day: DAYS[0], time: `${WORKING_DAY_START}:00` });
@@ -27,26 +50,53 @@ function CreateEventForm({ users, onEventPost, setNewNotification }) {
           type="checkbox"
           id="allMembersCheckbox"
           value="All members"
-          onChange={(event) =>
-            setEventData({
-              ...eventData,
-              members: event.target.value,
-            })
-          }
+          onChange={(ev) => {
+            const isChecked = ev.target.checked;
+
+            if (isChecked) {
+              return setIsChoosenMembers(
+                [...isChoosenMembers].map((member) => ({
+                  ...member,
+                  isChoosen: true,
+                }))
+              );
+            }
+
+            return setIsChoosenMembers(
+              [...isChoosenMembers].map((member) => ({
+                ...member,
+                isChoosen: false,
+              }))
+            );
+          }}
         />
         <label className="form-check-label" htmlFor="allMembersCheckbox">
           All members
         </label>
       </div>
 
-      {users.map((user) => (
+      {isChoosenMembers.map((user) => (
         <div key={user.id} className="form-check">
           <input
             className="form-check-input member"
             type="checkbox"
-            data-member={user.id}
+            data-userid={user.id}
             value={user.id}
-            onChange={(event) => setEventData({ members: event.target.value })}
+            checked={user.isChoosen}
+            onChange={(ev) => {
+              setIsChoosenMembers(
+                [...isChoosenMembers].map((member) => {
+                  const userId = ev.target.getAttribute('data-userid');
+
+                  if (member.id === userId) {
+                    console.log(member.isChoosen);
+                    return { ...member, isChoosen: !member.isChoosen };
+                  }
+
+                  return member;
+                })
+              );
+            }}
           />
           <label className="form-check-label">{user.data.name}</label>
         </div>
@@ -103,7 +153,7 @@ function CreateEventForm({ users, onEventPost, setNewNotification }) {
 
     if (
       eventData.name &&
-      eventData.members &&
+      eventData.members.length &&
       eventData.day &&
       eventData.time
     ) {
@@ -114,7 +164,6 @@ function CreateEventForm({ users, onEventPost, setNewNotification }) {
           window.location.href = '/meeting-planning-calendar-react';
         }, 1000);
     } else {
-      console.log('Please, fill out all fields');
       setNewNotification(
         <Notification message="Please, fill out all fields" status="warning" />
       );
