@@ -4,9 +4,7 @@ import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { userContext, UserProvider } from '../../contexts/user-context';
 import { noMembersMock } from '../../fixtures-members';
-import Calendar from '../Calendar/Calendar';
-import LogInModal from '../Login-modal';
-import CreateEventForm from '../Create-event-form';
+import CalendarPage from '../../pages/Calendar-page';
 
 function App() {
   const getSessionUser = JSON.parse(sessionStorage.getItem('memberLoggedIn'));
@@ -158,23 +156,15 @@ function App() {
   return (
     <UserProvider value={{ sessionUser, setSessionUser }}>
       <Switch>
-        <Route path="/meeting-planning-calendar-react" exact>
-          <LogInModal users={users} />
-          <Calendar
+        <Redirect exact from="/" to="/meeting-planning-calendar-react" />
+        <Route path="/meeting-planning-calendar-react">
+          <CalendarPage
             users={users}
             events={events}
             onEventDelete={onEventDelete}
+            onEventPost={onEventPost}
           />
         </Route>
-
-        <Route path="/create-event">
-          <CreateEventForm users={users} onEventPost={onEventPost} />
-        </Route>
-
-        <Route
-          path="/"
-          component={() => <Redirect to="/meeting-planning-calendar-react" />}
-        />
       </Switch>
     </UserProvider>
   );

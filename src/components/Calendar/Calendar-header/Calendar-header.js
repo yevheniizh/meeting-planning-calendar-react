@@ -24,7 +24,7 @@ function CalendarHeader({ users }) {
           </select>
         </div>
         <div className="calendar__header_handling-newEventCreatingButton">
-          <Link to="/create-event">
+          <Link to="/meeting-planning-calendar-react/create-event">
             <button
               type="submit"
               name="newEvent"
