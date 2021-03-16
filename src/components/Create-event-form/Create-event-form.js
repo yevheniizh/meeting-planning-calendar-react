@@ -153,6 +153,7 @@ function CreateEventForm({ users, onEventPost, setNewNotification }) {
 
     if (
       eventData.name &&
+      eventData.members &&
       eventData.members.length &&
       eventData.day &&
       eventData.time
