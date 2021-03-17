@@ -9,7 +9,7 @@ import Calendar from '../../components/Calendar/Calendar';
 import CreateEventForm from '../../components/Create-event-form';
 import LogInModal from '../../components/Login-modal';
 
-function CalendarPage({ events, onEventDelete, onEventPost, newNotification }) {
+function CalendarPage({ onEventDelete, onEventPost, newNotification }) {
   const [notifications, setNotification] = useState([]);
 
   const setNewNotification = (notification) =>
@@ -26,7 +26,7 @@ function CalendarPage({ events, onEventDelete, onEventPost, newNotification }) {
     <>
       <Route path="/meeting-planning-calendar-react" exact>
         <LogInModal />
-        <Calendar events={events} onEventDelete={onEventDelete} />
+        <Calendar onEventDelete={onEventDelete} />
       </Route>
 
       <Route path="/meeting-planning-calendar-react/create-event">

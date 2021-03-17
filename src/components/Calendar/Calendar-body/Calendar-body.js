@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import { connect } from 'react-redux';
 import CalendarBodyColumn from './Calendar-body-column';
 import CalendarBodyHoursColumn from './Calendar-body-hours-column';
 import { DAYS } from '../../../utils/constants';
@@ -27,4 +28,6 @@ function CalendarBody({ events, onEventDelete, sortingBy }) {
   );
 }
 
-export default CalendarBody;
+export default connect((state) => ({
+  events: state.events.entities,
+}))(CalendarBody);

@@ -233,6 +233,4 @@ function CreateEventForm({ users, onEventPost, setNewNotification }) {
 
 export default connect((state) => ({
   users: state.users.entities,
-  loading: state.users.loading,
-  loaded: state.users.loaded,
 }))(CreateEventForm);

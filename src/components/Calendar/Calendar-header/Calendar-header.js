@@ -84,6 +84,4 @@ function CalendarHeader({ users, setSortingBy }) {
 
 export default connect((state) => ({
   users: state.users.entities,
-  loading: state.users.loading,
-  loaded: state.users.loaded,
 }))(CalendarHeader);

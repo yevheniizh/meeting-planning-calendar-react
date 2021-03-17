@@ -2,17 +2,13 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect, useContext } from 'react';
 
-import { useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
 import { userContext } from '../../contexts/user-context';
 
-function LogInModal() {
+function LogInModal({ users, loadingUsers, loadedUsers }) {
   const { sessionUser, setSessionUser } = useContext(userContext);
-  const users = useSelector((state) => state.users.entities);
-
-  // set first user from list as default user
-  const [sessionUserName, setSessionUserName] = useState(users[0].data.name);
-  const handleFirstUserFromList = () => setSessionUserName(users[0].data.name);
+  const [sessionUserName, setSessionUserName] = useState(null);
 
   const [showModal, setShowModal] = useState(null);
   const handleCloseModal = () => setShowModal(false);
@@ -21,9 +17,23 @@ function LogInModal() {
   useEffect(() => {
     if (!sessionUser) {
       handleShowModal();
-      handleFirstUserFromList();
+      if (!loadingUsers && loadedUsers) {
+        setSessionUserName(users[0].data.name);
+      }
     }
   }, [sessionUser]);
+
+  const onSubmitSessionUser = () => {
+    handleCloseModal();
+
+    if (!sessionUserName) {
+      return setSessionUser(users[0]);
+    }
+
+    return setSessionUser(() =>
+      users.find((user) => user.data.name === sessionUserName)
+    );
+  };
 
   return (
     <Modal
@@ -42,32 +52,20 @@ function LogInModal() {
             id="membersDropdownModal"
             onChange={(ev) => setSessionUserName(ev.target.value)}
           >
-            {users.map((member) => (
+            {users.map((user) => (
               <option
-                key={member.id}
-                value={member.data.name}
-                data-rights={member.data.rights}
+                key={user.id}
+                value={user.data.name}
+                data-rights={user.data.rights}
               >
-                {member.data.name} ({member.data.rights})
+                {user.data.name} ({user.data.rights})
               </option>
             ))}
           </select>
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          variant="secondary"
-          onClick={() => {
-            handleCloseModal();
-            setSessionUser(() => {
-              const user = users.find(
-                (member) => member.data.name === sessionUserName
-              );
-
-              return user;
-            });
-          }}
-        >
+        <Button variant="secondary" onClick={onSubmitSessionUser}>
           Submit
         </Button>
       </Modal.Footer>
@@ -75,4 +73,8 @@ function LogInModal() {
   );
 }
 
-export default LogInModal;
+export default connect((state) => ({
+  users: state.users.entities,
+  loadingUsers: state.users.loading,
+  loadedUsers: state.users.loaded,
+}))(LogInModal);
