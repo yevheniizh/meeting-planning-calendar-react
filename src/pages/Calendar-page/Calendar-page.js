@@ -26,7 +26,10 @@ function CalendarPage({ onEventDelete, onEventPost, newNotification }) {
     <>
       <Route path="/meeting-planning-calendar-react" exact>
         <LogInModal />
-        <Calendar onEventDelete={onEventDelete} />
+        <Calendar
+          onEventDelete={onEventDelete}
+          setNewNotification={setNewNotification}
+        />
       </Route>
 
       <Route path="/meeting-planning-calendar-react/create-event">

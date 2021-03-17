@@ -2,19 +2,37 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect, useContext } from 'react';
 import { userContext } from '../../../contexts/user-context';
+import Notification from '../../Notification';
 
-function Event({ event, onEventDelete }) {
+function Event({ event, onEventDelete, setNewNotification }) {
   const { sessionUser } = useContext(userContext);
 
-  const isDeleteEvent = () => {
+  const isDeleteEvent = async () => {
     const modal = global.confirm(
       `Are you sure you want to delete '${event.data.name}' event?`
     );
 
     if (modal) {
-      onEventDelete(event.id);
+      const isEventDeleted = await onEventDelete(event.id);
+      console.log(isEventDeleted);
+
+      if (isEventDeleted) {
+        return setNewNotification(
+          <Notification
+            message="API: event deleted successfully"
+            status="successful"
+          />
+        );
+      }
+
+      return setNewNotification(
+        <Notification message="Something went wrong" status="warning" />
+      );
     }
+
+    return setNewNotification(<Notification message="Action was undone" />);
   };
+
   const getEvent = () => {
     if (sessionUser && sessionUser.data.rights === 'admin') {
       return (

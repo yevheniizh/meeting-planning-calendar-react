@@ -172,9 +172,9 @@ function CreateEventForm({ users, events, onEventPost, setNewNotification }) {
         );
       }
 
-      const isTimeSlotEmpty = await onEventPost(eventData);
+      const isPosted = await onEventPost(eventData);
 
-      if (isTimeSlotEmpty) {
+      if (isPosted) {
         setNewNotification(
           <Notification
             message="API: event posted successfully"

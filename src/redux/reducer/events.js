@@ -4,6 +4,7 @@ import {
   FAILURE,
   LOAD_EVENTS,
   POST_EVENT,
+  DELETE_EVENT,
 } from '../constants';
 
 const initialState = {
@@ -14,7 +15,7 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-  const { type, data, error } = action;
+  const { type, data, deletingEventId, error } = action;
 
   switch (type) {
     case LOAD_EVENTS + REQUEST:
@@ -51,6 +52,29 @@ export default (state = initialState, action) => {
         loaded: true,
       };
     case POST_EVENT + FAILURE:
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        error,
+      };
+
+    case DELETE_EVENT + REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case DELETE_EVENT + SUCCESS:
+      return {
+        ...state,
+        entities: [
+          ...state.entities.filter((event) => event.id !== deletingEventId),
+        ],
+        loading: false,
+        loaded: true,
+      };
+    case DELETE_EVENT + FAILURE:
       return {
         ...state,
         loading: false,

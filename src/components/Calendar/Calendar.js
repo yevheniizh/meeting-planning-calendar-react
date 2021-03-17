@@ -6,13 +6,17 @@ import CalendarFooter from './Calendar-footer';
 
 import './style.scss';
 
-function Calendar({ onEventDelete }) {
+function Calendar({ onEventDelete, setNewNotification }) {
   const [sortingBy, setSortingBy] = useState('All members');
 
   return (
     <div className="calendar">
       <CalendarHeader setSortingBy={setSortingBy} />
-      <CalendarBody onEventDelete={onEventDelete} sortingBy={sortingBy} />
+      <CalendarBody
+        onEventDelete={onEventDelete}
+        sortingBy={sortingBy}
+        setNewNotification={setNewNotification}
+      />
       <CalendarFooter />
     </div>
   );

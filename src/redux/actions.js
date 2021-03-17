@@ -3,6 +3,7 @@ import {
   LOAD_EVENTS,
   LOAD_USERS,
   POST_EVENT,
+  DELETE_EVENT,
   REQUEST,
   SUCCESS,
   FAILURE,
@@ -80,6 +81,34 @@ export const postEvent = (eventData) => async (dispatch) => {
     return isEventPosted;
   } catch (error) {
     dispatch({ type: POST_EVENT + FAILURE, error });
+
+    return false;
+  }
+};
+
+export const deleteEvent = (deletingEventId) => async (dispatch) => {
+  dispatch({ type: DELETE_EVENT + REQUEST });
+  try {
+    const isEventDeleted = await fetch(
+      `http://158.101.166.74:8080/api/data/yevhenii_zhyrov/events/${deletingEventId}`,
+      {
+        method: 'DELETE',
+      }
+    ).then((res) => {
+      if (res.ok) {
+        console.log(res);
+        return true;
+      }
+
+      console.log(res);
+      return false;
+    });
+
+    dispatch({ type: DELETE_EVENT + SUCCESS, deletingEventId });
+
+    return isEventDeleted;
+  } catch (error) {
+    dispatch({ type: DELETE_EVENT + FAILURE, error });
 
     return false;
   }

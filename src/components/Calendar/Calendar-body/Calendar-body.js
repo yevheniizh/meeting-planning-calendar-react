@@ -5,7 +5,12 @@ import CalendarBodyColumn from './Calendar-body-column';
 import CalendarBodyHoursColumn from './Calendar-body-hours-column';
 import { DAYS } from '../../../utils/constants';
 
-function CalendarBody({ events, onEventDelete, sortingBy }) {
+function CalendarBody({
+  events,
+  onEventDelete,
+  sortingBy,
+  setNewNotification,
+}) {
   return (
     <div className="calendar__table">
       <ul className="calendar__table-column" data-day="Name">
@@ -21,6 +26,7 @@ function CalendarBody({ events, onEventDelete, sortingBy }) {
             events={events}
             onEventDelete={onEventDelete}
             sortingBy={sortingBy}
+            setNewNotification={setNewNotification}
           />
         </ul>
       ))}

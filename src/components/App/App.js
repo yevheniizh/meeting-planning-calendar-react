@@ -8,7 +8,12 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { UserProvider } from '../../contexts/user-context';
 import CalendarPage from '../../pages/Calendar-page';
 import ErrorPage from '../../pages/error404/Error-page';
-import { loadUsers, loadEvents, postEvent } from '../../redux/actions';
+import {
+  loadUsers,
+  loadEvents,
+  postEvent,
+  deleteEvent,
+} from '../../redux/actions';
 // import Notification from '../Notification';
 
 function App({
@@ -19,40 +24,11 @@ function App({
   loadingEvents,
   loadedEvents,
   postEvent,
+  deleteEvent,
 }) {
   // const [events, setEvents] = useState(null);
   const [sessionUser, setSessionUser] = useState(null);
   // const [newNotification, setNewNotification] = useState();
-
-  // const onEventDelete = async (eventId) => {
-  //   try {
-  //     const response = await fetch(
-  //       `http://158.101.166.74:8080/api/data/yevhenii_zhyrov/events/${eventId}`,
-  //       {
-  //         method: 'DELETE',
-  //       }
-  //     );
-
-  //     if (response.ok) {
-  //       const updatedEvents = events.filter((event) => event.id !== eventId);
-
-  //       setEvents(updatedEvents);
-  //       setNewNotification(
-  //         <Notification
-  //           message="API: event deleted successfully"
-  //           status="successful"
-  //         />
-  //       );
-  //       return;
-  //     }
-
-  //     setNewNotification(
-  //       <Notification message="API: something went wrong" status="warning" />
-  //     );
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
 
   // const fetchEvents = useCallback(async () => {
   //   try {
@@ -158,7 +134,7 @@ function App({
         <Redirect exact from="/" to="/meeting-planning-calendar-react" />
         <Route path="/meeting-planning-calendar-react">
           <CalendarPage
-            // onEventDelete={onEventDelete}
+            onEventDelete={deleteEvent}
             onEventPost={postEvent}
             // newNotification={newNotification}
           />
@@ -179,5 +155,5 @@ export default connect(
     loadingEvents: state.events.loading,
     loadedEvents: state.events.loaded,
   })),
-  { loadUsers, loadEvents, postEvent }
+  { loadUsers, loadEvents, postEvent, deleteEvent }
 )(App);
