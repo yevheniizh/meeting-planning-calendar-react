@@ -23,9 +23,6 @@ function CreateEventForm({ users, onEventPost, setNewNotification }) {
     setMembersChoosenByDefault
   );
 
-  console.log(isChoosenMembers);
-  console.log(eventData);
-
   const setMembers = () =>
     setEventData({
       ...eventData,

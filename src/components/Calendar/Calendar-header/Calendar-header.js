@@ -1,8 +1,45 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable consistent-return */
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { userContext } from '../../../contexts/user-context';
 
 function CalendarHeader({ users, setSortingBy }) {
+  const { sessionUser } = useContext(userContext);
+
+  const getNewEventButton = () => {
+    if (sessionUser && sessionUser.data.rights === 'admin') {
+      return (
+        <Link to="/meeting-planning-calendar-react/create-event">
+          <button
+            type="submit"
+            name="newEvent"
+            className="btn btn-outline-dark"
+          >
+            New event +
+          </button>
+        </Link>
+      );
+    }
+
+    return (
+      <button
+        type="submit"
+        name="newEvent"
+        className="btn btn-outline-dark disabled"
+      >
+        New event +
+      </button>
+    );
+  };
+
+  const [newEventButton, setNewEventButton] = useState(getNewEventButton());
+
+  useEffect(() => {
+    setNewEventButton(getNewEventButton());
+  }, [sessionUser]);
+
   return (
     <div className="calendar__header">
       <div>
@@ -37,15 +74,7 @@ function CalendarHeader({ users, setSortingBy }) {
           </select>
         </div>
         <div className="calendar__header_handling-newEventCreatingButton">
-          <Link to="/meeting-planning-calendar-react/create-event">
-            <button
-              type="submit"
-              name="newEvent"
-              className="btn btn-outline-dark"
-            >
-              New event +
-            </button>
-          </Link>
+          {newEventButton}
         </div>
       </div>
     </div>
