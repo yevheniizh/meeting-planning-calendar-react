@@ -1,16 +1,17 @@
+/* eslint-disable no-shadow */
+/* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useContext, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { connect } from 'react-redux';
 
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { userContext, UserProvider } from '../../contexts/user-context';
-import { noMembersMock } from '../../fixtures-members';
+import { UserProvider } from '../../contexts/user-context';
 import CalendarPage from '../../pages/Calendar-page';
 import ErrorPage from '../../pages/error404/Error-page';
+import loadUsers from '../../redux/actions';
 import Notification from '../Notification';
 
-function App() {
-  const { defaultSessionUser } = useContext(userContext);
-  const [users, setUsers] = useState(null);
+function App({ users, loadUsers, loading, loaded }) {
   const [events, setEvents] = useState(null);
   const [sessionUser, setSessionUser] = useState(null);
   const [newNotification, setNewNotification] = useState();
@@ -137,56 +138,58 @@ function App() {
     }
   }, []);
 
-  const fetchUsers = useCallback(async () => {
-    try {
-      const response = await fetch(
-        'http://158.101.166.74:8080/api/data/yevhenii_zhyrov/users'
-      );
-      const result = await response.json();
+  // const fetchUsers = useCallback(async () => {
+  //   try {
+  //     const response = await fetch(
+  //       'http://158.101.166.74:8080/api/data/yevhenii_zhyrov/users'
+  //     );
+  //     const result = await response.json();
 
-      if (result === null) {
-        if (sessionUser === null) setSessionUser(defaultSessionUser);
+  //     if (result === null) {
+  //       if (sessionUser === null) setSessionUser(defaultSessionUser);
 
-        setUsers(noMembersMock);
-        setNewNotification(
-          <Notification
-            message="API: users downloaded successfully, but... no data yet"
-            status="successful"
-          />
-        );
-        return;
-      }
+  //       setUsers(noMembersMock);
+  //       setNewNotification(
+  //         <Notification
+  //           message="API: users downloaded successfully, but... no data yet"
+  //           status="successful"
+  //         />
+  //       );
+  //       return;
+  //     }
 
-      if (response.ok) {
-        const data = result.map((item) => ({
-          id: item.id,
-          data: JSON.parse(item.data),
-        }));
+  //     if (response.ok) {
+  //       const data = result.map((item) => ({
+  //         id: item.id,
+  //         data: JSON.parse(item.data),
+  //       }));
 
-        setUsers(data);
-        setNewNotification(
-          <Notification
-            message="API: users downloaded successfully"
-            status="successful"
-          />
-        );
-        return;
-      }
+  //       setUsers(data);
+  //       setNewNotification(
+  //         <Notification
+  //           message="API: users downloaded successfully"
+  //           status="successful"
+  //         />
+  //       );
+  //       return;
+  //     }
 
-      setNewNotification(
-        <Notification message="API: something went wrong" status="warning" />
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
+  //     setNewNotification(
+  //       <Notification message="API: something went wrong" status="warning" />
+  //     );
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }, []);
 
   useEffect(() => {
-    fetchEvents();
-    fetchUsers();
-  }, [fetchUsers, fetchEvents]);
+    loadUsers();
+    if (!loading && !loaded) {
+      fetchEvents();
+    }
+  }, [loadUsers, fetchEvents]);
 
-  if (users === null) {
+  if (!users.length || users === null) {
     return <div />;
   }
 
@@ -196,7 +199,6 @@ function App() {
         <Redirect exact from="/" to="/meeting-planning-calendar-react" />
         <Route path="/meeting-planning-calendar-react">
           <CalendarPage
-            users={users}
             events={events}
             onEventDelete={onEventDelete}
             onEventPost={onEventPost}
@@ -210,4 +212,11 @@ function App() {
   );
 }
 
-export default App;
+export default connect(
+  (state) => ({
+    users: state.users.entities,
+    loading: state.users.loading,
+    loaded: state.users.loaded,
+  }),
+  { loadUsers }
+)(App);

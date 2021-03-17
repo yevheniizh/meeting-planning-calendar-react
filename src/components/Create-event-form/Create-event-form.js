@@ -3,6 +3,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import './style.scss';
 import {
@@ -230,4 +231,8 @@ function CreateEventForm({ users, onEventPost, setNewNotification }) {
   );
 }
 
-export default CreateEventForm;
+export default connect((state) => ({
+  users: state.users.entities,
+  loading: state.users.loading,
+  loaded: state.users.loaded,
+}))(CreateEventForm);

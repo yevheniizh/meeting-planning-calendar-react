@@ -6,12 +6,12 @@ import CalendarFooter from './Calendar-footer';
 
 import './style.scss';
 
-function Calendar({ users, events, onEventDelete }) {
+function Calendar({ events, onEventDelete }) {
   const [sortingBy, setSortingBy] = useState('All members');
 
   return (
     <div className="calendar">
-      <CalendarHeader users={users} setSortingBy={setSortingBy} />
+      <CalendarHeader setSortingBy={setSortingBy} />
       <CalendarBody
         events={events}
         onEventDelete={onEventDelete}

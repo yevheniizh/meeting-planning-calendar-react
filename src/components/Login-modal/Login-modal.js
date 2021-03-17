@@ -1,17 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect, useContext } from 'react';
+
+import { useSelector } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
 import { userContext } from '../../contexts/user-context';
 
-function LogInModal({ users, _showModal }) {
+function LogInModal() {
   const { sessionUser, setSessionUser } = useContext(userContext);
+  const users = useSelector((state) => state.users.entities);
 
   // set first user from list as default user
   const [sessionUserName, setSessionUserName] = useState(users[0].data.name);
   const handleFirstUserFromList = () => setSessionUserName(users[0].data.name);
 
-  const [showModal, setShowModal] = useState(_showModal);
+  const [showModal, setShowModal] = useState(null);
   const handleCloseModal = () => setShowModal(false);
   const handleShowModal = () => setShowModal(true);
 

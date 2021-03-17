@@ -2,6 +2,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useContext, useState } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { userContext } from '../../../contexts/user-context';
 
@@ -81,4 +82,8 @@ function CalendarHeader({ users, setSortingBy }) {
   );
 }
 
-export default CalendarHeader;
+export default connect((state) => ({
+  users: state.users.entities,
+  loading: state.users.loading,
+  loaded: state.users.loaded,
+}))(CalendarHeader);
