@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect, useContext } from 'react';
 import { Modal, Button } from 'react-bootstrap';
@@ -8,13 +9,17 @@ function LogInModal({ users, _showModal }) {
 
   // set first user from list as default user
   const [sessionUserName, setSessionUserName] = useState(users[0].data.name);
+  const handleFirstUserFromList = () => setSessionUserName(users[0].data.name);
 
   const [showModal, setShowModal] = useState(_showModal);
   const handleCloseModal = () => setShowModal(false);
   const handleShowModal = () => setShowModal(true);
 
   useEffect(() => {
-    if (!sessionUser) handleShowModal();
+    if (!sessionUser) {
+      handleShowModal();
+      handleFirstUserFromList();
+    }
   }, [sessionUser]);
 
   return (
