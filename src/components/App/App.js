@@ -9,12 +9,10 @@ import ErrorPage from '../../pages/error404/Error-page';
 import Notification from '../Notification';
 
 function App() {
-  const getSessionUser = JSON.parse(sessionStorage.getItem('memberLoggedIn'));
-
   const { defaultSessionUser } = useContext(userContext);
   const [users, setUsers] = useState(null);
   const [events, setEvents] = useState(null);
-  const [sessionUser, setSessionUser] = useState(getSessionUser);
+  const [sessionUser, setSessionUser] = useState(null);
   const [newNotification, setNewNotification] = useState();
 
   const onEventDelete = async (eventId) => {

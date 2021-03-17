@@ -2,22 +2,20 @@ import React, { useContext } from 'react';
 import { userContext } from '../../../contexts/user-context';
 
 function CalendarFooter() {
-  const { setSessionUser } = useContext(userContext);
-  const getSessionUser = JSON.parse(sessionStorage.getItem('memberLoggedIn'));
+  const { sessionUser, setSessionUser } = useContext(userContext);
 
-  if (getSessionUser) {
+  if (sessionUser) {
     return (
       <div className="calendar__footer">
         <div>
-          You are logged in as {getSessionUser.data.name} (
-          {getSessionUser.data.rights})
+          You are logged in as {sessionUser.data.name} (
+          {sessionUser.data.rights})
         </div>
         <button
           type="button"
           className="btn btn-outline-secondary"
           id="logOutButton"
           onClick={() => {
-            sessionStorage.clear();
             setSessionUser(null);
           }}
         >

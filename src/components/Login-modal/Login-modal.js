@@ -61,8 +61,6 @@ function LogInModal({ users, _showModal }) {
                 (member) => member.data.name === sessionUserName
               );
 
-              sessionStorage.setItem('memberLoggedIn', JSON.stringify(user));
-
               return user;
             });
           }}
