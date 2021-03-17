@@ -13,7 +13,7 @@ import {
 } from '../../utils/constants';
 import Notification from '../Notification';
 
-function CreateEventForm({ users, onEventPost, setNewNotification }) {
+function CreateEventForm({ users, events, onEventPost, setNewNotification }) {
   const setMembersChoosenByDefault = [...users].map((user) => ({
     ...user,
     isChoosen: false,
@@ -149,6 +149,7 @@ function CreateEventForm({ users, onEventPost, setNewNotification }) {
   const handleSubmit = async (ev) => {
     ev.preventDefault();
 
+    // check is new event data full & fetch response
     if (
       eventData.name &&
       eventData.members &&
@@ -156,17 +157,44 @@ function CreateEventForm({ users, onEventPost, setNewNotification }) {
       eventData.day &&
       eventData.time
     ) {
+      // check is time slot is empty
+      if (
+        events.some(
+          ({ data }) =>
+            data.day === eventData.day && data.time === eventData.time
+        )
+      ) {
+        return setNewNotification(
+          <Notification
+            message="This time slot is already occupied. Please choose another day or time"
+            status="warning"
+          />
+        );
+      }
+
       const isTimeSlotEmpty = await onEventPost(eventData);
 
-      if (isTimeSlotEmpty)
-        setTimeout(() => {
+      if (isTimeSlotEmpty) {
+        setNewNotification(
+          <Notification
+            message="API: event posted successfully"
+            status="successful"
+          />
+        );
+
+        return setTimeout(() => {
           window.location.href = '/meeting-planning-calendar-react';
-        }, 1000);
-    } else {
-      setNewNotification(
-        <Notification message="Please, fill out all fields" status="warning" />
+        }, 2000);
+      }
+
+      return setNewNotification(
+        <Notification message="Something went wrong" status="warning" />
       );
     }
+
+    return setNewNotification(
+      <Notification message="Please, fill out all fields" status="warning" />
+    );
   };
 
   return (
@@ -233,4 +261,5 @@ function CreateEventForm({ users, onEventPost, setNewNotification }) {
 
 export default connect((state) => ({
   users: state.users.entities,
+  events: state.events.entities,
 }))(CreateEventForm);

@@ -8,7 +8,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { UserProvider } from '../../contexts/user-context';
 import CalendarPage from '../../pages/Calendar-page';
 import ErrorPage from '../../pages/error404/Error-page';
-import { loadUsers, loadEvents } from '../../redux/actions';
+import { loadUsers, loadEvents, postEvent } from '../../redux/actions';
 // import Notification from '../Notification';
 
 function App({
@@ -18,6 +18,7 @@ function App({
   loadEvents,
   loadingEvents,
   loadedEvents,
+  postEvent,
 }) {
   // const [events, setEvents] = useState(null);
   const [sessionUser, setSessionUser] = useState(null);
@@ -50,55 +51,6 @@ function App({
   //     );
   //   } catch (error) {
   //     console.error(error);
-  //   }
-  // };
-
-  // const onEventPost = async (eventData) => {
-  //   if (
-  //     events.some(
-  //       ({ data }) => data.day === eventData.day && data.time === eventData.time
-  //     )
-  //   ) {
-  //     setNewNotification(
-  //       <Notification
-  //         message="API: This time slot is already occupied. Please choose another day or time"
-  //         status="warning"
-  //       />
-  //     );
-  //     return false;
-  //   }
-
-  //   try {
-  //     const response = await fetch(
-  //       'http://158.101.166.74:8080/api/data/yevhenii_zhyrov/events',
-  //       {
-  //         method: 'POST',
-  //         headers: {
-  //           'Content-Type': 'application/json;charset=utf-8',
-  //         },
-  //         body: JSON.stringify({
-  //           data: JSON.stringify(eventData),
-  //         }),
-  //       }
-  //     );
-
-  //     if (response.ok) {
-  //       setNewNotification(
-  //         <Notification
-  //           message="API: event posted successfully"
-  //           status="successful"
-  //         />
-  //       );
-  //       return true;
-  //     }
-
-  //     setNewNotification(
-  //       <Notification message="API: something went wrong" status="warning" />
-  //     );
-  //     return false;
-  //   } catch (error) {
-  //     console.error(error);
-  //     return false;
   //   }
   // };
 
@@ -206,9 +158,9 @@ function App({
         <Redirect exact from="/" to="/meeting-planning-calendar-react" />
         <Route path="/meeting-planning-calendar-react">
           <CalendarPage
-          // onEventDelete={onEventDelete}
-          // onEventPost={onEventPost}
-          // newNotification={newNotification}
+            // onEventDelete={onEventDelete}
+            onEventPost={postEvent}
+            // newNotification={newNotification}
           />
         </Route>
 
@@ -227,5 +179,5 @@ export default connect(
     loadingEvents: state.events.loading,
     loadedEvents: state.events.loaded,
   })),
-  { loadUsers, loadEvents }
+  { loadUsers, loadEvents, postEvent }
 )(App);
