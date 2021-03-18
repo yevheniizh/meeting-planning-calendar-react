@@ -39,47 +39,17 @@ export default (state = initialState, action) => {
         error,
       };
 
-    case POST_EVENT + REQUEST:
+    case POST_EVENT:
       return {
         ...state,
-        loading: true,
-        error: null,
-      };
-    case POST_EVENT + SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        loaded: true,
-      };
-    case POST_EVENT + FAILURE:
-      return {
-        ...state,
-        loading: false,
-        loaded: false,
-        error,
       };
 
-    case DELETE_EVENT + REQUEST:
-      return {
-        ...state,
-        loading: true,
-        error: null,
-      };
-    case DELETE_EVENT + SUCCESS:
+    case DELETE_EVENT:
       return {
         ...state,
         entities: [
           ...state.entities.filter((event) => event.id !== deletingEventId),
         ],
-        loading: false,
-        loaded: true,
-      };
-    case DELETE_EVENT + FAILURE:
-      return {
-        ...state,
-        loading: false,
-        loaded: false,
-        error,
       };
 
     default:

@@ -8,7 +8,7 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-  const { type, data = [], error } = action;
+  const { type, data, error } = action;
 
   switch (type) {
     case LOAD_USERS + REQUEST:

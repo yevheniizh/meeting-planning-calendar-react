@@ -17,65 +17,37 @@ const ENTITY_USERS = 'users';
 export const loadEvents = () => async (dispatch) => {
   dispatch({ type: LOAD_EVENTS + REQUEST });
   try {
-    const data = await fetch(`${BACKEND_URL}/${SYSTEM}/${ENTITY_EVENTS}`)
-      .then((res) => res.json())
-      .then((events) => {
-        if (events === null) {
-          return [];
-        }
+    const response = await fetch(`${BACKEND_URL}/${SYSTEM}/${ENTITY_EVENTS}`);
+    const result = await response.json();
 
-        return events.map((item) => ({
-          id: item.id,
-          data: JSON.parse(item.data),
-        }));
-      });
+    if (result === null) {
+      const data = [];
+
+      dispatch({ type: LOAD_EVENTS + SUCCESS, data });
+
+      return data;
+    }
+
+    const data = result.map((item) => ({
+      id: item.id,
+      data: JSON.parse(item.data),
+    }));
+
     dispatch({ type: LOAD_EVENTS + SUCCESS, data });
+
+    return data;
   } catch (error) {
+    const data = [];
+
     dispatch({ type: LOAD_EVENTS + FAILURE, error });
+
+    return data;
   }
 };
 
 export const loadUsers = () => async (dispatch) => {
   dispatch({ type: LOAD_USERS + REQUEST });
   try {
-    //     const response = await fetch(
-    //       'http://158.101.166.74:8080/api/data/yevhenii_zhyrov/users'
-    //     );
-    //     const result = await response.json();
-
-    //     if (result === null) {
-    //       if (sessionUser === null) setSessionUser(defaultSessionUser);
-
-    //       setUsers(noMembersMock);
-    //       setNewNotification(
-    //         <Notification
-    //           message="API: users downloaded successfully, but... no data yet"
-    //           status="successful"
-    //         />
-    //       );
-    //       return;
-    //     }
-
-    //     if (response.ok) {
-    //       const data = result.map((item) => ({
-    //         id: item.id,
-    //         data: JSON.parse(item.data),
-    //       }));
-
-    //       setUsers(data);
-    //       setNewNotification(
-    //         <Notification
-    //           message="API: users downloaded successfully"
-    //           status="successful"
-    //         />
-    //       );
-    //       return;
-    //     }
-
-    //     setNewNotification(
-    //       <Notification message="API: something went wrong" status="warning" />
-    //     );
-
     const response = await fetch(`${BACKEND_URL}/${SYSTEM}/${ENTITY_USERS}`);
     const result = await response.json();
 
@@ -105,7 +77,6 @@ export const loadUsers = () => async (dispatch) => {
 };
 
 export const postEvent = (eventData) => async (dispatch) => {
-  dispatch({ type: POST_EVENT + REQUEST });
   try {
     const isEventPosted = await fetch(
       `${BACKEND_URL}/${SYSTEM}/${ENTITY_EVENTS}`,
@@ -125,18 +96,15 @@ export const postEvent = (eventData) => async (dispatch) => {
 
       return false;
     });
-    dispatch({ type: POST_EVENT + SUCCESS });
+    dispatch({ type: POST_EVENT });
 
     return isEventPosted;
   } catch (error) {
-    dispatch({ type: POST_EVENT + FAILURE, error });
-
     return false;
   }
 };
 
 export const deleteEvent = (deletingEventId) => async (dispatch) => {
-  dispatch({ type: DELETE_EVENT + REQUEST });
   try {
     const isEventDeleted = await fetch(
       `${BACKEND_URL}/${SYSTEM}/${ENTITY_EVENTS}/${deletingEventId}`,
@@ -151,12 +119,10 @@ export const deleteEvent = (deletingEventId) => async (dispatch) => {
       return false;
     });
 
-    dispatch({ type: DELETE_EVENT + SUCCESS, deletingEventId });
+    dispatch({ type: DELETE_EVENT, deletingEventId });
 
     return isEventDeleted;
   } catch (error) {
-    dispatch({ type: DELETE_EVENT + FAILURE, error });
-
     return false;
   }
 };

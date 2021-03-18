@@ -28,7 +28,10 @@ function Event({ event, deleteEvent, setNewNotification }) {
       }
 
       return setNewNotification(
-        <Notification message="Something went wrong" status="warning" />
+        <Notification
+          message="Something went wrong with deleteng event"
+          status="warning"
+        />
       );
     }
 

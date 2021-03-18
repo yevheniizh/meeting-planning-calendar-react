@@ -10,21 +10,12 @@ import CalendarPage from '../../pages/Calendar-page';
 import ErrorPage from '../../pages/error404/Error-page';
 import { loadUsers, loadEvents } from '../../redux/actions';
 
-function App({
-  loadUsers,
-  loadingUsers,
-  loadedUsers,
-  loadEvents,
-  loadingEvents,
-  loadedEvents,
-}) {
+function App({ loadUsers, loadingUsers, loadedUsers, loadEvents }) {
   const [sessionUser, setSessionUser] = useState(null);
 
   useEffect(() => {
     loadUsers();
-    if (!loadingEvents && !loadedEvents) {
-      loadEvents();
-    }
+    loadEvents();
   }, [loadUsers, loadEvents]);
 
   if (loadingUsers && !loadedUsers) {

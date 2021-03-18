@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-shadow */
 /* eslint-disable no-return-assign */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
@@ -12,7 +14,16 @@ import CreateEventForm from '../../components/Create-event-form';
 import LogInModal from '../../components/Login-modal';
 import Notification from '../../components/Notification';
 
-function CalendarPage({ users, loadingUsers, loadedUsers, errorUsers }) {
+function CalendarPage({
+  users,
+  loadingUsers,
+  loadedUsers,
+  errorUsers,
+  events,
+  loadingEvents,
+  loadedEvents,
+  errorEvents,
+}) {
   const initialState = { notificationsStore: [] };
 
   function reducer(state, action) {
@@ -21,7 +32,7 @@ function CalendarPage({ users, loadingUsers, loadedUsers, errorUsers }) {
     ];
 
     switch (action.type) {
-      case 'increment':
+      case 'showNotification':
         return {
           notificationsStore: [
             ...croppedNotifications,
@@ -47,7 +58,7 @@ function CalendarPage({ users, loadingUsers, loadedUsers, errorUsers }) {
     newNotificationData.handleIsShow();
 
     dispatch({
-      type: 'increment',
+      type: 'showNotification',
       newNotificationData,
     });
   };
@@ -59,8 +70,7 @@ function CalendarPage({ users, loadingUsers, loadedUsers, errorUsers }) {
       if (users[0].data.name === 'guest') {
         return setNewNotification(
           <Notification
-            message="API: users downloaded successfully, but...
-            no data yet"
+            message="API: users downloaded successfully, but... no data yet"
             status="successful"
           />
         );
@@ -75,13 +85,56 @@ function CalendarPage({ users, loadingUsers, loadedUsers, errorUsers }) {
     }
 
     if (errorUsers) {
-      <Notification message="API: error" status="error" />;
+      return setNewNotification(
+        <Notification message="API: error with loading users" status="error" />
+      );
     }
 
-    return setNewNotification(
-      <Notification message="API: something went wrong" status="warning" />
-    );
+    if (!loadingEvents && !loadedEvents) {
+      return setNewNotification(
+        <Notification
+          message="API: something went wrong with loading users"
+          status="warning"
+        />
+      );
+    }
   }, [loadingUsers, loadedUsers, errorUsers]);
+
+  useEffect(() => {
+    if (!loadingEvents && loadedEvents) {
+      // check if events downloaded, but no data
+      if (!events.length) {
+        return setNewNotification(
+          <Notification
+            message="API: events downloaded successfully, but... no data yet"
+            status="successful"
+          />
+        );
+      }
+
+      return setNewNotification(
+        <Notification
+          message="API: events downloaded successfully"
+          status="successful"
+        />
+      );
+    }
+
+    if (errorEvents) {
+      return setNewNotification(
+        <Notification message="API: error with loading events" status="error" />
+      );
+    }
+
+    if (!loadingEvents && !loadedEvents) {
+      return setNewNotification(
+        <Notification
+          message="API: something went wrong with loading events"
+          status="warning"
+        />
+      );
+    }
+  }, [loadingEvents, loadedEvents, errorEvents]);
 
   const renderedNotifications = state.notificationsStore.map(
     ({ notification, isShow }) => {
@@ -118,4 +171,8 @@ export default connect((state) => ({
   loadingUsers: state.users.loading,
   loadedUsers: state.users.loaded,
   errorUsers: state.users.error,
+  events: state.events.entities,
+  loadingEvents: state.events.loading,
+  loadedEvents: state.events.loaded,
+  errorEvents: state.events.error,
 }))(CalendarPage);
