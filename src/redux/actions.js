@@ -96,11 +96,9 @@ export const deleteEvent = (deletingEventId) => async (dispatch) => {
       }
     ).then((res) => {
       if (res.ok) {
-        console.log(res);
         return true;
       }
 
-      console.log(res);
       return false;
     });
 
