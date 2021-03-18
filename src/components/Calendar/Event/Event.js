@@ -1,10 +1,13 @@
+/* eslint-disable no-shadow */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect, useContext } from 'react';
+import { connect } from 'react-redux';
 import { userContext } from '../../../contexts/user-context';
 import Notification from '../../Notification';
+import { deleteEvent } from '../../../redux/actions';
 
-function Event({ event, onEventDelete, setNewNotification }) {
+function Event({ event, deleteEvent, setNewNotification }) {
   const { sessionUser } = useContext(userContext);
 
   const isDeleteEvent = async () => {
@@ -13,8 +16,7 @@ function Event({ event, onEventDelete, setNewNotification }) {
     );
 
     if (modal) {
-      const isEventDeleted = await onEventDelete(event.id);
-      console.log(isEventDeleted);
+      const isEventDeleted = await deleteEvent(event.id);
 
       if (isEventDeleted) {
         return setNewNotification(
@@ -78,4 +80,4 @@ function Event({ event, onEventDelete, setNewNotification }) {
   return renedredEvent;
 }
 
-export default Event;
+export default connect(null, { deleteEvent })(Event);

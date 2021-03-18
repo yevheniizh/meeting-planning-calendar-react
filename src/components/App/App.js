@@ -8,12 +8,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { UserProvider } from '../../contexts/user-context';
 import CalendarPage from '../../pages/Calendar-page';
 import ErrorPage from '../../pages/error404/Error-page';
-import {
-  loadUsers,
-  loadEvents,
-  postEvent,
-  deleteEvent,
-} from '../../redux/actions';
+import { loadUsers, loadEvents } from '../../redux/actions';
 // import Notification from '../Notification';
 
 function App({
@@ -23,8 +18,6 @@ function App({
   loadEvents,
   loadingEvents,
   loadedEvents,
-  postEvent,
-  deleteEvent,
 }) {
   // const [events, setEvents] = useState(null);
   const [sessionUser, setSessionUser] = useState(null);
@@ -134,9 +127,7 @@ function App({
         <Redirect exact from="/" to="/meeting-planning-calendar-react" />
         <Route path="/meeting-planning-calendar-react">
           <CalendarPage
-            onEventDelete={deleteEvent}
-            onEventPost={postEvent}
-            // newNotification={newNotification}
+          // newNotification={newNotification}
           />
         </Route>
 
@@ -147,13 +138,11 @@ function App({
 }
 
 export default connect(
-  ((state) => ({
+  (state) => ({
     loadingUsers: state.users.loading,
     loadedUsers: state.users.loaded,
-  }),
-  (state) => ({
     loadingEvents: state.events.loading,
     loadedEvents: state.events.loaded,
-  })),
-  { loadUsers, loadEvents, postEvent, deleteEvent }
+  }),
+  { loadUsers, loadEvents }
 )(App);

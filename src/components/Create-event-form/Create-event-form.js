@@ -13,13 +13,13 @@ import {
   WORKING_DAY_START,
 } from '../../utils/constants';
 import Notification from '../Notification';
-import { loadEvents } from '../../redux/actions';
+import { loadEvents, postEvent } from '../../redux/actions';
 
 function CreateEventForm({
   users,
   events,
   loadEvents,
-  onEventPost,
+  postEvent,
   setNewNotification,
 }) {
   const setMembersChoosenByDefault = [...users].map((user) => ({
@@ -182,7 +182,7 @@ function CreateEventForm({
         );
       }
 
-      const isPosted = await onEventPost(eventData);
+      const isPosted = await postEvent(eventData);
 
       if (isPosted) {
         setNewNotification(
@@ -276,5 +276,5 @@ export default connect(
     users: state.users.entities,
     events: state.events.entities,
   }),
-  { loadEvents }
+  { loadEvents, postEvent }
 )(CreateEventForm);

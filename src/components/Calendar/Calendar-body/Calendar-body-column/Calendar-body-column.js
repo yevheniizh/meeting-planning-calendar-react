@@ -7,13 +7,7 @@ import {
   WORKING_DAY_TIMESLOTS_QUANTITY,
 } from '../../../../utils/constants';
 
-function CalendarBodyColumn({
-  day,
-  events,
-  onEventDelete,
-  sortingBy,
-  setNewNotification,
-}) {
+function CalendarBodyColumn({ day, events, sortingBy, setNewNotification }) {
   if (events) {
     let filteredByDayEventsData = [...events].filter(
       (event) => event.data.day === day
@@ -51,7 +45,6 @@ function CalendarBodyColumn({
                   event={filteredByDayEventsData.find(
                     (event) => event.data.time === timeSlot
                   )}
-                  onEventDelete={onEventDelete}
                   setNewNotification={setNewNotification}
                 />
               </li>
