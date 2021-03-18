@@ -1,8 +1,9 @@
+/* eslint-disable no-shadow */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import './style.scss';
@@ -12,12 +13,21 @@ import {
   WORKING_DAY_START,
 } from '../../utils/constants';
 import Notification from '../Notification';
+import { loadEvents } from '../../redux/actions';
 
-function CreateEventForm({ users, events, onEventPost, setNewNotification }) {
+function CreateEventForm({
+  users,
+  events,
+  loadEvents,
+  onEventPost,
+  setNewNotification,
+}) {
   const setMembersChoosenByDefault = [...users].map((user) => ({
     ...user,
     isChoosen: false,
   }));
+
+  const history = useHistory();
 
   const [eventData, setEventData] = useState({});
   const [isChoosenMembers, setIsChoosenMembers] = useState(
@@ -182,8 +192,10 @@ function CreateEventForm({ users, events, onEventPost, setNewNotification }) {
           />
         );
 
+        loadEvents();
+
         return setTimeout(() => {
-          window.location.href = '/meeting-planning-calendar-react';
+          history.push('/meeting-planning-calendar-react');
         }, 2000);
       }
 
@@ -259,7 +271,10 @@ function CreateEventForm({ users, events, onEventPost, setNewNotification }) {
   );
 }
 
-export default connect((state) => ({
-  users: state.users.entities,
-  events: state.events.entities,
-}))(CreateEventForm);
+export default connect(
+  (state) => ({
+    users: state.users.entities,
+    events: state.events.entities,
+  }),
+  { loadEvents }
+)(CreateEventForm);
