@@ -24,42 +24,32 @@ function CalendarPage({
   loadedEvents,
   errorEvents,
 }) {
-  const initialState = { notificationsStore: [] };
-
   function reducer(state, action) {
-    const croppedNotifications = [
-      ...state.notificationsStore.slice(state.notificationsStore.length - 5),
-    ];
+    const { type, data } = action;
 
-    switch (action.type) {
+    switch (type) {
       case 'showNotification':
-        return {
-          notificationsStore: [
-            ...croppedNotifications,
-            action.newNotificationData,
-          ],
-        };
+        return [...state, data];
+
+      case 'deleteNotification':
+        return state.filter((i) => i.id !== data.id);
+
       default:
         throw new Error();
     }
   }
 
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, []);
 
   const setNewNotification = (notification) => {
-    const newNotificationData = {
+    const data = {
+      id: uuid(),
       notification,
-      isShow: true,
-      handleIsShow() {
-        setTimeout(() => (newNotificationData.isShow = false), 2000);
-      },
     };
-
-    newNotificationData.handleIsShow();
 
     dispatch({
       type: 'showNotification',
-      newNotificationData,
+      data,
     });
   };
 
@@ -136,14 +126,20 @@ function CalendarPage({
     }
   }, [loadingEvents, loadedEvents, errorEvents]);
 
-  const renderedNotifications = state.notificationsStore.map(
-    ({ notification, isShow }) => {
-      if (isShow === true)
-        return <React.Fragment key={uuid()}>{notification}</React.Fragment>;
+  const renderedNotifications = state.map(({ id, notification }) => {
+    window.setTimeout(() => {
+      const data = {
+        id,
+      };
 
-      return null;
-    }
-  );
+      dispatch({
+        type: 'deleteNotification',
+        data,
+      });
+    }, 2000);
+
+    return <React.Fragment key={id}>{notification}</React.Fragment>;
+  });
 
   return (
     <>
