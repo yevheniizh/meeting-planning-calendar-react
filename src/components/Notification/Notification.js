@@ -14,13 +14,7 @@ function Notification({ message, status }) {
   }, []);
 
   return (
-    <Toast
-      key={uuid()}
-      onClose={() => setShow(false)}
-      show={show}
-      delay={2000}
-      autohide
-    >
+    <Toast key={uuid()} show={show} delay={2000} autohide>
       <Toast.Body className={`calendar__toast_${status}`}>{message}</Toast.Body>
     </Toast>
   );

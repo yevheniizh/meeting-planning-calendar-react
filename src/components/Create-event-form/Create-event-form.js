@@ -97,7 +97,6 @@ function CreateEventForm({
                   const userId = ev.target.getAttribute('data-userid');
 
                   if (member.id === userId) {
-                    console.log(member.isChoosen);
                     return { ...member, isChoosen: !member.isChoosen };
                   }
 
