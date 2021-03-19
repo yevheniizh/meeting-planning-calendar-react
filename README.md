@@ -10,10 +10,12 @@ This is a simple app that shows schedule of meetings. You can add new one or rem
 
 ## Tech stack
 
-- React;
+- **Create React App** as a boilerplate;
+- React / Redux / Router / React Hooks;
+- Redux-Thunk for fetching data from the backend;
+- Bootstrap / React-Bootstrap;
 - SCSS;
-- Bootstrap/React-Bootstrap;
-- ESLint/Prettier
+- ESLint / Prettier.
 
 ## Completed by
 
