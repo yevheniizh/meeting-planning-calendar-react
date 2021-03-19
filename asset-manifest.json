@@ -1,23 +1,23 @@
 {
   "files": {
     "main.css": "/meeting-planning-calendar-react/static/css/main.d83f719f.chunk.css",
-    "main.js": "/meeting-planning-calendar-react/static/js/main.f0596236.chunk.js",
-    "main.js.map": "/meeting-planning-calendar-react/static/js/main.f0596236.chunk.js.map",
+    "main.js": "/meeting-planning-calendar-react/static/js/main.4c096ab2.chunk.js",
+    "main.js.map": "/meeting-planning-calendar-react/static/js/main.4c096ab2.chunk.js.map",
     "runtime-main.js": "/meeting-planning-calendar-react/static/js/runtime-main.3c340b73.js",
     "runtime-main.js.map": "/meeting-planning-calendar-react/static/js/runtime-main.3c340b73.js.map",
     "static/css/2.54370922.chunk.css": "/meeting-planning-calendar-react/static/css/2.54370922.chunk.css",
-    "static/js/2.e8f457a7.chunk.js": "/meeting-planning-calendar-react/static/js/2.e8f457a7.chunk.js",
-    "static/js/2.e8f457a7.chunk.js.map": "/meeting-planning-calendar-react/static/js/2.e8f457a7.chunk.js.map",
+    "static/js/2.76f6bb04.chunk.js": "/meeting-planning-calendar-react/static/js/2.76f6bb04.chunk.js",
+    "static/js/2.76f6bb04.chunk.js.map": "/meeting-planning-calendar-react/static/js/2.76f6bb04.chunk.js.map",
     "index.html": "/meeting-planning-calendar-react/index.html",
     "static/css/2.54370922.chunk.css.map": "/meeting-planning-calendar-react/static/css/2.54370922.chunk.css.map",
     "static/css/main.d83f719f.chunk.css.map": "/meeting-planning-calendar-react/static/css/main.d83f719f.chunk.css.map",
-    "static/js/2.e8f457a7.chunk.js.LICENSE.txt": "/meeting-planning-calendar-react/static/js/2.e8f457a7.chunk.js.LICENSE.txt"
+    "static/js/2.76f6bb04.chunk.js.LICENSE.txt": "/meeting-planning-calendar-react/static/js/2.76f6bb04.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.3c340b73.js",
     "static/css/2.54370922.chunk.css",
-    "static/js/2.e8f457a7.chunk.js",
+    "static/js/2.76f6bb04.chunk.js",
     "static/css/main.d83f719f.chunk.css",
-    "static/js/main.f0596236.chunk.js"
+    "static/js/main.4c096ab2.chunk.js"
   ]
 }
