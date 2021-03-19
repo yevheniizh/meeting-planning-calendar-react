@@ -66,13 +66,13 @@ function CalendarPage({
   // set Notification after getting users
   useEffect(() => {
     if (loadingUsers && !loadedUsers) return;
-    setTimeout(() => setNewNotification(<NotifyUsersStatus />), 200);
+    setNewNotification(<NotifyUsersStatus />);
   }, [loadingUsers, loadedUsers, errorUsers]);
 
   // set Notification after getting events
   useEffect(() => {
     if (loadingEvents && !loadedEvents) return;
-    setTimeout(() => setNewNotification(<NotifyEventsStatus />), 200);
+    setNewNotification(<NotifyEventsStatus />);
   }, [loadingEvents, loadedEvents, errorEvents]);
 
   return (

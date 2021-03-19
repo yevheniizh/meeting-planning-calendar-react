@@ -10,7 +10,7 @@ function Notification({ message, status }) {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    setShow(true);
+    setTimeout(() => setShow(true), 200);
   }, []);
 
   return (
