@@ -22,6 +22,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        loaded: false,
         error: null,
       };
     case LOAD_EVENTS + SUCCESS:
